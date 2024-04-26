@@ -1,0 +1,12 @@
+h1 {
+    color: brown;
+}
+
+.hidden {
+    display: none;
+  }
+  
+  label {
+    margin-bottom: 10px;
+    display: block;
+  }
