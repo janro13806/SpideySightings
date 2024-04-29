@@ -5,8 +5,10 @@
 }
 
 :root {
-  --primary: #DF1F2D;
-  --secondary: #447BBE;
+  --primary: #B11313;
+  --primary-alt: #DF1F2D;
+  --secondary: #2B3784;
+  --secondary-alt: #447BBE;
   --content: #FFF;
   --background: #F3F3F3;
   --text: #000;
