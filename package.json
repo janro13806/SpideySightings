@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "npm server.js",
+    "start:dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -13,13 +14,14 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "express-oauth2-jwt-bearer": "^1.6.0"
+    "express-oauth2-jwt-bearer": "^1.6.0",
+    "mssql": "^10.0.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
   },
   "nodemonConfig": {
     "restartable": "rs",
-    "delay": 250
+    "delay": 2500
   }
 }
