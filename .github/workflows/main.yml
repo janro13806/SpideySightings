@@ -58,6 +58,7 @@ jobs:
               application_name: SpiderSightings-App
               environment_name: SpiderSightings-App-env
               region: eu-west-1
+              version_label: "version1-${{ steps.current-time.outputs.time }}"
               deployment_package: deploy.zip
       
           - name: Deployed!
