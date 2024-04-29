@@ -1,5 +1,5 @@
 {
-    "audience": "http://localhost:8080",
+    "audience": "http://spidersightings-app-env.eba-ubkvwsqu.eu-west-1.elasticbeanstalk.com/",
     "domain": "dev-yr27mck7ia3usnqt.us.auth0.com",
     "clientId": "J9n24pKYHIOCyFMEXJnUY1RjvmrnfC6b"
 }
