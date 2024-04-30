@@ -38,13 +38,13 @@ jobs:
             run: npm run lint
       
           - name: Generate deployment package
-            run: 
+            run: |
               mkdir security/
               cd security
               touch cert.key
               touch cert.crt
-              echo "${{secrets.SSL_KEY}}" > cert.key
-              echo "${{secrets.SSL_CERT}}" > cert.crt
+              echo "${{ secrets.SSL_KEY }}" > cert.key
+              echo "${{ secrets.SSL_CERT }}" > cert.crt
               zip -r deploy.zip * -x "**node_modules**"
       
           - name: Get timestamp
