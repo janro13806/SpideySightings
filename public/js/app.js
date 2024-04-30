@@ -37,9 +37,7 @@ window.onload = async () => {
 
 const updateUI = async () => {
     const isAuthenticated = await auth0Client.isAuthenticated();
-
     document.getElementById("btn-logout").disabled = !isAuthenticated;
-    document.getElementById("btn-login").disabled = isAuthenticated;
     document.getElementById("btn-call-api").disabled = !isAuthenticated;
 
     if (isAuthenticated) {
@@ -52,8 +50,16 @@ const updateUI = async () => {
         document.getElementById(
             "ipt-user-profile"
         ).textContent = JSON.stringify(await auth0Client.getUser());
+
+        document.getElementById("btn-nav-login").removeEventListener("click", login);
+        document.getElementById("btn-nav-login").addEventListener("click", logout);
+        document.getElementById("btn-nav-login").textContent = 'Logout';
     } else {
         document.getElementById("gated-content").classList.add("hidden");
+
+        document.getElementById("btn-nav-login").removeEventListener("click", logout);
+        document.getElementById("btn-nav-login").addEventListener("click", login);
+        document.getElementById("btn-nav-login").textContent = 'Login';
     }
 };
 
