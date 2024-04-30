@@ -45,6 +45,7 @@ jobs:
               touch cert.crt
               echo "${{ secrets.SSL_KEY }}" > cert.key
               echo "${{ secrets.SSL_CERT }}" > cert.crt
+              cd ../
               zip -r deploy.zip * -x "**node_modules**"
       
           - name: Get timestamp
