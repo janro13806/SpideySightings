@@ -6,13 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spidey Sightings</title>
   <link rel="stylesheet" type="text/css" href="/css/main.css" />
+  <link rel="stylesheet" type="text/css" href="/css/nav.css" />
 </head>
 
 <body>
-  <h1>welcme t spidey sightings</h1>
-  <button id="btn-login" type="button" disabled="true" onclick="login()">
+
+  <nav>
+    <h1>Spidey Sightings</h1>
+    <ul class="menu cf">
+      <li><a href="#">Home</a></li>
+      <li>
+        <a href="#">Services</a>
+        <ul class="submenu">
+          <li><a href="#">Location Tracker</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </li>
+      <li class="nav-about"><a href="#">About</a></li>
+      <li class="nav-contact"><a href="#">Contact</a></li>
+      <li class="nav-login"><a id="btn-nav-login">Login</a></li>
+      <!--   -->
+    </ul>
+  </nav>
+
+  <!-- <button id="btn-login" type="button" disabled="true" onclick="login()">
     <p>LOG IN</p>
-  </button>
+  </button> -->
 
   <main class="hidden" id="gated-content">
     <p>
