@@ -31,11 +31,22 @@ jobs:
             with:
               node-version: ${{ matrix.node-version }}
       
-          - name: Installing NPM
-            run: npm install
+          - name: npm install
+            run: npm ci
+
+          - name: Check code
+            run: npm run lint
       
           - name: Generate deployment package
-            run: zip -r deploy.zip * -x "**node_modules**"
+            run: |
+              mkdir security/
+              cd security
+              touch cert.key
+              touch cert.crt
+              echo "${{ secrets.SSL_KEY }}" > cert.key
+              echo "${{ secrets.SSL_CERT }}" > cert.crt
+              cd ../
+              zip -r deploy.zip * -x "**node_modules**"
       
           - name: Get timestamp
             uses: gerred/actions/current-time@master
@@ -60,6 +71,3 @@ jobs:
               region: eu-west-1
               version_label: "version1-${{ steps.current-time.outputs.time }}"
               deployment_package: deploy.zip
-      
-          - name: Deployed!
-            run: echo App deployed to ELB
