@@ -1,0 +1,177 @@
+/* import the spiderman font */
+@font-face {
+    font-family: 'Spiderman';
+    src: url('./Comback-Home.ttf');
+}
+
+:root {
+    --input-focus: #2d8cf0;
+    --font-color: #323232;
+    --font-color-sub: #666;
+    --bg-color: beige;
+    --main-color: black;  
+    --primary: #B11313;
+    --primary-alt: #DF1F2D;
+    --secondary: #2B3784;
+    --secondary-alt: #447BBE;
+    --content: #FFF;
+    --background: #F3F3F3;
+    --text: #000;
+    --on-background: #E1E1E1; 
+}
+
+.custom-file-upload {
+    height: 6em;
+    width: 15em;
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    gap: 0.5em;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border: 0.125em dashed #cacaca;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 0.7em;
+    border-radius: 1.5em;
+    margin-left: 0.78em;
+}
+
+.custom-file-upload:hover {
+    transform: scale(1.1);
+}
+
+.custom-file-upload .UploadIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+.custom-file-upload .UploadIcon svg {
+    height: 4em;
+    fill: rgba(75, 85, 99, 1);
+}
+
+.custom-file-upload .text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-file-upload .text span {
+    font-weight: 400;
+    font-size: 1.6em;
+    font-family: 'Spiderman';
+    color: rgba(75, 85, 99, 1);
+}
+
+.custom-file-upload input {
+    display: none;
+}
+
+/* FORM Below */
+.form {
+    width: 85vw;
+    padding: 2em;
+    background-color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.5em;
+    border-radius: 0.5em;
+    border: 0.125em solid var(--primary-alt);
+    box-shadow: 0.4em 0.4em var(--primary);
+    margin-left: 4em;
+    margin-right: 4em;
+}
+
+.formTitle {
+    font-family: 'Spiderman';
+    color: var(--text);
+    font-weight: 900;
+    font-size: 5em;
+}
+
+.subTitle {
+    font-family: 'Spiderman';
+    color: var(--background);
+    font-weight: 700;
+    font-size: 3em;
+    margin-bottom: 0.5em;
+}
+
+.input {
+    width: 78vw;
+    height: 6vh;
+    border-radius: 0.2em;
+    border: 0.05em solid var(--text);
+    background-color: var(--primary);
+    box-shadow: 0.2em 0.2em var(--font-color); 
+    font-size: 3em;
+    font-weight: 100;
+    font-family: 'Spiderman';
+    color: var(--background);
+    padding: 0.2em 1em;
+    outline: none;
+    margin-bottom: 0.5em;
+    padding-right: 0.2em;
+    padding-left: 1.2em;
+    margin-right: 0.2em;
+    margin-left: 0.3em;
+}
+
+input[type="datetime-local"] {
+    padding-left: 1.2em;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.input:hover {
+    transform: scale(1.06);
+}
+
+.input::placeholder {
+    color: var(--background);
+    opacity: 0.8;
+}
+
+.input:focus {
+    border: 0.085em solid var(--background);
+}
+
+.button-confirm {
+    display: inline-block;
+    margin: 2em auto 0 auto;
+    min-width: 4em;
+    height: 4.5em;
+    border-radius: 0.7em;
+    border: 0.125em solid var(--text);
+    background-color: var(--primary);
+    box-shadow: 4px 4px var(--font-color);
+    color: var(--content);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.button-confirm p {
+    margin: 0;
+    font-size: 2.5em;
+    font-weight: 300;
+    font-family: 'Spiderman';
+    white-space: nowrap;
+}
+
+button:hover {
+    background-color: var(--secondary-alt);
+    box-shadow: 4px 4px var(--font-color);
+    transform: scale(1.1);
+}
+
+button:active {
+    background-color: var(--secondary);
+    transition: all 0.25s;
+    -webkit-transition: all 0.25s;
+    box-shadow: none;
+    transform: scale(0.98);
+}
+
