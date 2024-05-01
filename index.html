@@ -7,13 +7,33 @@
   <title>Spidey Sightings</title>
   <link rel="stylesheet" type="text/css" href="/css/main.css" />
   <link rel="stylesheet" type="text/css" href="/css/sightingForm.css" />
+  <link rel="stylesheet" type="text/css" href="/css/nav.css" />
 </head>
 
 <body>
-  <h1>welcme t spidey sightings</h1>
-  <button id="btn-login" type="button" disabled="true" onclick="login()">
+
+  <nav>
+    <h1 id="header">Spidey Sightings</h1>
+    <ul class="menu cf">
+      <li><button id="btn-nav-home">Home</button></li>
+      <li>
+        <button>Services</button>
+        <ul class="submenu">
+          <li><button>Location Tracker</button></li>
+          <li><button>About</button></li>
+          <li><button>Contact</button></li>
+        </ul>
+      </li>
+      <li class="nav-about"><button>About</button></li>
+      <li class="nav-contact"><button>Contact</button></li>
+      <li class="nav-login"><button id="btn-nav-login">Login</button></li>
+      <!--   -->
+    </ul>
+  </nav>
+
+  <!-- <button id="btn-login" type="button" disabled="true" onclick="login()">
     <p>LOG IN</p>
-  </button>
+  </button> -->
 
   <main class="hidden" id="gated-content">
     <p>
