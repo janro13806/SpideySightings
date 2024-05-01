@@ -25,13 +25,6 @@ const config = {
       }
 };
 
-sql.connect(config, err => {
-    if (err) {
-        console.error('Error connecting to the database:', err);
-        return;
-    }    console.log('Connected to SQL Server');
-});
-
 app.use(express.static(join(__dirname, "public")));
 
 // create the JWT middleware
@@ -52,7 +45,7 @@ app.get("/auth_config.json", (req, res) => {
 });
 
 // _______________________________ALL ENDPOINTS GO ABOVE THIS LINE______________________________________________________________________________________
-app.get("/*", (_, res) => {
+app.get("/home", (_, res) => {
   res.sendFile(join(__dirname, "index.html"));
 });
 
@@ -62,6 +55,25 @@ app.use((err, req, res, next) => {
     }
 
     next(err, req, res);
+});
+
+app.get("/sightings", async (_, res) => {
+
+    try {
+        await sql.connect(config)
+
+        const result = await sql.query('SELECT * FROM spideyDb.dbo.Sightings;');
+
+        res.json(result.recordset);
+
+    }catch (err) {
+        res.status(500).send('Database Error');
+
+    }finally {
+        await sql.close();
+
+    }
+
 });
 
 app.listen(8000, () => console.log("Application running on port " + 8000));
