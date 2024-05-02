@@ -2,16 +2,10 @@ const sql = require('mssql');
 const express = require("express");
 const { join } = require("path");
 const app = express();
-// const https = require("https");
-// const fs = require("fs");
 const { auth } = require("express-oauth2-jwt-bearer");
 const authConfig = require("./auth_config.json");
 const dotenv = require("dotenv").config();
 
-// const options = {
-//     key: fs.readFileSync("./security/cert.key"),
-//     cert: fs.readFileSync("./security/cert.crt"),
-// };
 
 const PORT = process.env.PORT || 3000;
 const config = {
@@ -72,11 +66,6 @@ app.get("/sightings", async (_, res) => {
 
     }finally {
         await sql.close();
-
     }
 
 });
-
-// https.createServer(options, app).listen(PORT, () => {
-//     console.log(`HTTPS server started on port ${PORT}`);
-// });

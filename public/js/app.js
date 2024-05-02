@@ -104,3 +104,15 @@ const callApi = async () => {
       console.error(e);
     }
   };
+
+
+document.getElementById('SightingForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+
+    const location = formData.get('location');
+    console.log("🚀 ~ document.getElementById ~ location:", location)
+
+    
+});
