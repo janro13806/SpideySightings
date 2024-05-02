@@ -112,7 +112,16 @@ document.getElementById('SightingForm').addEventListener('submit', (event) => {
     const formData = new FormData(event.target);
 
     const location = formData.get('location');
-    console.log("🚀 ~ document.getElementById ~ location:", location)
+    console.log("🚀 ~ document.getElementById ~ location:", location);
+    const description = formData.get('description');
+    console.log("🚀 ~ document.getElementById ~ description:", description);
+    const sightingTime = formData.get('sightingTime');
+    console.log("🚀 ~ document.getElementById ~ sightingTime:", sightingTime);
+    const image = formData.get('image');
+    console.log("🚀 ~ document.getElementById ~ image:", image);
 
+    // fetch('/upload', {
+    //     method : 'POST'
+    // })
     
 });

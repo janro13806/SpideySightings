@@ -5,6 +5,9 @@ const app = express();
 const { auth } = require("express-oauth2-jwt-bearer");
 const authConfig = require("./auth_config.json");
 const dotenv = require("dotenv").config();
+const { Upload } = require("@aws-sdk/lib-storage");
+const { S3Client } = require("@aws-sdk/client-s3");
+const formidable = require('formidable');
 
 
 const PORT = process.env.PORT || 3000;
@@ -34,24 +37,11 @@ app.get("/api/external", checkJwt, (req, res) => {
     });
 });
 
+
 app.get("/auth_config.json", (req, res) => {
     res.sendFile(join(__dirname, "auth_config.json"));
 });
 
-// _______________________________ALL ENDPOINTS GO ABOVE THIS LINE______________________________________________________________________________________
-app.get("/", (_, res) => {
-  res.sendFile(join(__dirname, "index.html"));
-});
-
-app.use((err, req, res, next) => {
-    if (err.name === "UnauthorizedError") {
-        return res.status(401).send({ msg: "Invalid token" });
-    }
-
-    next(err, req, res);
-});
-
-app.listen(PORT, () => console.log("Application running on port " + PORT));
 app.get("/sightings", async (_, res) => {
 
     try {
@@ -69,3 +59,23 @@ app.get("/sightings", async (_, res) => {
     }
 
 });
+
+app.post('/upload', (req, res) => {
+    
+});
+
+// _______________________________ALL ENDPOINTS GO ABOVE THIS LINE______________________________________________________________________________________
+app.get("/", (_, res) => {
+  res.sendFile(join(__dirname, "index.html"));
+});
+
+app.use((err, req, res, next) => {
+    if (err.name === "UnauthorizedError") {
+        return res.status(401).send({ msg: "Invalid token" });
+    }
+
+    next(err, req, res);
+});
+
+
+app.listen(PORT, () => console.log("Application running on port " + PORT));
