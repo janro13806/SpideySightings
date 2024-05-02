@@ -47,9 +47,14 @@ const updateUI = async () => {
             "ipt-access-token"
         ).innerHTML = await auth0Client.getTokenSilently();
 
+        const userData = JSON.stringify(await auth0Client.getUser());
+        console.log(JSON.parse(userData).picture);
+
+        document.getElementById("cardAvatar").src = JSON.parse(userData).picture;
+
         document.getElementById(
             "ipt-user-profile"
-        ).textContent = JSON.stringify(await auth0Client.getUser());
+        ).textContent = userData;
 
         document.getElementById("btn-nav-login").removeEventListener("click", login);
         document.getElementById("btn-nav-login").addEventListener("click", logout);

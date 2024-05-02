@@ -1,0 +1,79 @@
+/* import the spiderman font */
+@font-face {
+    font-family: 'Spiderman';
+    src: url('./Comback-Home.ttf');
+}
+
+:root {
+    --input-focus: #2d8cf0;
+    --font-color: #323232;
+    --font-color-sub: #666;
+    --bg-color: beige;
+    --main-color: black;  
+    --primary: #B11313;
+    --primary-alt: #DF1F2D;
+    --secondary: #2B3784;
+    --secondary-alt: #447BBE;
+    --content: #FFF;
+    --background: #F3F3F3;
+    --text: #000;
+    --on-background: #E1E1E1;
+    --test: #AAA;
+}
+
+.profile-card {
+    font-family: 'Spiderman';
+    position: relative;
+    width: 80em;
+    height: 20em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    background: var(--primary);
+}
+
+img {
+    height: 10em;
+    width: 100%;
+
+}
+
+.card__img {
+    height: auto; /* Allow the image to adjust its height based on the width */
+    position: absolute;
+    top: 0; /* Stick the image to the top of the profile-card */
+    left: 0; /* Ensure the image starts from the left */
+    width: 100%;
+}
+
+.card__avatar {
+    position: absolute;
+    width: 114px;
+    height: 114px;
+    background: var(--bg-color);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: calc(50% - 57px);
+}
+
+.card__avatar svg {
+    width: 100px;
+    height: 100px;
+}
+
+.card__title {
+    margin-top: 60px;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--main-color);
+}
+
+.card__subtitle {
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--submain-color);
+}
