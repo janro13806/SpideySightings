@@ -12,6 +12,10 @@
 nav {
     width: 100%;
     container: navigation / inline-size;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 button {
@@ -19,7 +23,7 @@ button {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-/* Menu Dropdown */
+/* Menu */
 .menu,
 .submenu {
     margin: 0;
@@ -60,12 +64,16 @@ button {
     padding: 1em 2em;
 }
 
-.nav-login {
+.nav-login, .nav-home {
     transition: all 0.2s ease;
 }
 
 .nav-login:hover {
     transform: skewX(25deg) translateX(.5em);
+}
+
+.nav-home:hover {
+    transform: skewX(25deg) translateX(-0.5em);
 }
 
 /* Dropdown */
@@ -151,9 +159,9 @@ button {
     transform: skewX(-25deg) translateX(-15px);
 }
 
-/* containers */
+/* mobile */
 
-@container navigation (inline-size < 800px) {
+@media screen and (max-width: 1030px) {
 
     .menu,
     .submenu {
@@ -161,8 +169,14 @@ button {
         align-items: center;
     }
 
+    nav {
+        flex-direction: column;
+    }
+
     h1 {
-        font-size: 3.5em;
+        font-size: 2.5em;
+        margin-right: 0;
+        margin-bottom: .5em;
     }
 
     .menu>li {
