@@ -2,16 +2,16 @@ const sql = require('mssql');
 const express = require("express");
 const { join } = require("path");
 const app = express();
-const https = require("https");
-const fs = require("fs");
+// const https = require("https");
+// const fs = require("fs");
 const { auth } = require("express-oauth2-jwt-bearer");
 const authConfig = require("./auth_config.json");
 const dotenv = require("dotenv").config();
 
-const options = {
-    key: fs.readFileSync("./security/cert.key"),
-    cert: fs.readFileSync("./security/cert.crt"),
-};
+// const options = {
+//     key: fs.readFileSync("./security/cert.key"),
+//     cert: fs.readFileSync("./security/cert.crt"),
+// };
 
 const PORT = process.env.PORT || 3000;
 const config = {
@@ -64,8 +64,8 @@ app.use((err, req, res, next) => {
     next(err, req, res);
 });
 
-app.listen(8000, () => console.log("Application running on port " + 8000));
+app.listen(PORT, () => console.log("Application running on port " + PORT));
 
-https.createServer(options, app).listen(PORT, () => {
-    console.log(`HTTPS server started on port ${PORT}`);
-});
+// https.createServer(options, app).listen(PORT, () => {
+//     console.log(`HTTPS server started on port ${PORT}`);
+// });

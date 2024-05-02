@@ -73,7 +73,7 @@
 .form {
     width: 85vw;
     padding: 2em;
-    background-color: var(--secondary);
+    background-color: var(--secondary-alt);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -106,7 +106,7 @@
     height: 6vh;
     border-radius: 0.2em;
     border: 0.05em solid var(--text);
-    background-color: var(--primary);
+    background-color: var(--primary-alt);
     box-shadow: 0.2em 0.2em var(--font-color); 
     font-size: 3em;
     font-weight: 100;
