@@ -45,7 +45,7 @@ app.get("/auth_config.json", (req, res) => {
 });
 
 // _______________________________ALL ENDPOINTS GO ABOVE THIS LINE______________________________________________________________________________________
-app.get("/home", (_, res) => {
+app.get("/", (_, res) => {
   res.sendFile(join(__dirname, "index.html"));
 });
 
