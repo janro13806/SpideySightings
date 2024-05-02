@@ -61,7 +61,7 @@ app.listen(PORT, () => console.log("Application running on port " + PORT));
 app.get("/sightings", async (_, res) => {
 
     try {
-        await sql.connect(config)
+        await sql.connect(config);
 
         const result = await sql.query('SELECT * FROM spideyDb.dbo.Sightings;');
 
