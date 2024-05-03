@@ -47,9 +47,14 @@ const updateUI = async () => {
             "ipt-access-token"
         ).innerHTML = await auth0Client.getTokenSilently();
 
+        const userData = JSON.stringify(await auth0Client.getUser());
+        console.log(JSON.parse(userData).picture);
+
+        document.getElementById("cardAvatar").src = JSON.parse(userData).picture;
+
         document.getElementById(
             "ipt-user-profile"
-        ).textContent = JSON.stringify(await auth0Client.getUser());
+        ).textContent = userData;
 
         document.getElementById("btn-nav-login").removeEventListener("click", login);
         document.getElementById("btn-nav-login").addEventListener("click", logout);
@@ -99,3 +104,24 @@ const callApi = async () => {
       console.error(e);
     }
   };
+
+
+document.getElementById('SightingForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+
+    const location = formData.get('location');
+    console.log("🚀 ~ document.getElementById ~ location:", location);
+    const description = formData.get('description');
+    console.log("🚀 ~ document.getElementById ~ description:", description);
+    const sightingTime = formData.get('sightingTime');
+    console.log("🚀 ~ document.getElementById ~ sightingTime:", sightingTime);
+    const image = formData.get('image');
+    console.log("🚀 ~ document.getElementById ~ image:", image);
+
+    // fetch('/upload', {
+    //     method : 'POST'
+    // })
+    
+});
