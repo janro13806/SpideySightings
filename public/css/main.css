@@ -3,6 +3,7 @@
   font-family: 'Spiderman';
   src: url('./Comback-Home.ttf');
 }
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap");
 
 :root {
   --primary: #B11313;
@@ -22,7 +23,7 @@ body {
   justify-content: center;
   overflow-wrap: break-word;
   align-items: center;
-  font-family: Arial, Helvetica;
+  font-family: 'Montserrat', sans-serif;
   background-color: var(--background);
   background-image: linear-gradient(0deg, transparent 24%, var(--on-background) 25%, var(--on-background) 26%, transparent 27%, transparent 74%, var(--on-background) 75%, var(--on-background) 76%, transparent 77%, transparent),
     linear-gradient(90deg, transparent 24%, var(--on-background) 25%, var(--on-background) 26%, transparent 27%, transparent 74%, var(--on-background) 75%, var(--on-background) 76%, transparent 77%, transparent);
