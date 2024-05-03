@@ -70,7 +70,7 @@
 }
 
 /* FORM Below */
-.form {
+#SightingForm {
     width: 85vw;
     padding: 2em;
     background-color: var(--secondary-alt);
@@ -161,13 +161,13 @@ input[type="datetime-local"] {
     white-space: nowrap;
 }
 
-button:hover {
+.button-confirm:hover {
     background-color: var(--secondary-alt);
     box-shadow: 4px 4px var(--font-color);
     transform: scale(1.1);
 }
 
-button:active {
+.button-confirm:active {
     background-color: var(--secondary);
     transition: all 0.25s;
     -webkit-transition: all 0.25s;
