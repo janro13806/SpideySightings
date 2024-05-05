@@ -1,0 +1,53 @@
+@font-face {
+  font-family: 'Spiderman';
+  src: url('fonts/Comback-Home.ttf');
+}
+
+.cardHolderH{
+  display: flex;
+  /*set the main axis to be vertical*/
+  flex-direction: column;
+  /*center align items on the cross axis*/
+  align-items: center;
+}
+
+.cardH{
+  
+}
+
+.cardTitleH{
+  font-family: 'Spiderman';
+  font-size: 3em;
+}
+
+.cardContentH{
+  /*set the absolute position of children of cardContent relative to it*/
+  position: relative;
+
+  background-color: whitesmoke;
+}
+
+.cardImageH{
+  width: 40em;
+}
+
+.cardDescriptionH{
+  display: none;
+
+  /*place the text to the top of .cardContent*/
+  position:absolute;
+  top: 0;
+  left: 0;
+
+  padding: 1em;
+  font-size: 1.5em;
+  font-family: 'Arial Rounded MT Bold';
+}
+
+.cardContentH:hover .cardDescriptionH{
+  display: block;
+}
+
+.cardContentH:hover .cardImageH{
+  opacity: 0.4;
+}  
