@@ -61,7 +61,42 @@ app.get("/sightings", async (_, res) => {
 });
 
 app.post('/upload', (req, res) => {
-    
+    const formData = new formidable.IncomingForm();
+
+    formData.parse(req, (err, fields, files) => {
+        if (err) {
+            console.error(err);
+            return res.status(400).json({ error: err });
+        }
+
+        const file = files.image;
+        const fileStream = fs.createReadStream(file.path);
+        const uploadParams = {
+            Bucket: 'imgbckt',
+            Key: file.name,
+            Body: fileStream
+        };
+
+        const upload = new Upload({
+            client: new S3Client({
+                region: 'eu-west-1',
+                credentials: {
+                    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+                }
+            }),
+            params: uploadParams
+        });
+
+        upload.done().then(() => {
+            res.status(200).send('Upload done!');   
+        }).catch((error) => {
+            console.log('Error uploading:', error);
+            res.status(500).send('Error uploading file.');
+        });
+
+    });
+
 });
 
 // _______________________________ALL ENDPOINTS GO ABOVE THIS LINE______________________________________________________________________________________

@@ -94,7 +94,7 @@ const callApi = async () => {
           Authorization: `Bearer ${token}`
         }
       });
-        const responseData = await response.json();
+      const responseData = await response.json();
   
       const responseElement = document.getElementById("api-call-result");
   
@@ -106,10 +106,11 @@ const callApi = async () => {
   };
 
 
-document.getElementById('SightingForm').addEventListener('submit', (event) => {
+document.getElementById('SightingForm').addEventListener('submit', async (event) => {
     event.preventDefault();
     
     const formData = new FormData(event.target);
+    const token = await auth0Client.getTokenSilently();
 
     const location = formData.get('location');
     console.log("🚀 ~ document.getElementById ~ location:", location);
@@ -120,8 +121,19 @@ document.getElementById('SightingForm').addEventListener('submit', (event) => {
     const image = formData.get('image');
     console.log("🚀 ~ document.getElementById ~ image:", image);
 
-    // fetch('/upload', {
-    //     method : 'POST'
-    // })
+    fetch('/upload', {
+        method : 'POST',
+        body: formData,
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success : ', data);
+    })
+    .catch((error) => {
+         console.error('Error : ', error);
+     });
     
 });
