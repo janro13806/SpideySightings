@@ -1,41 +1,80 @@
-const sql = require('mssql');
 const express = require("express");
 const { join } = require("path");
 const { auth } = require("express-oauth2-jwt-bearer");
 const authConfig = require("./auth_config.json");
-const dotenv = require("dotenv").config();
-const { Upload } = require("@aws-sdk/lib-storage");
-const { S3Client } = require("@aws-sdk/client-s3");
-const formidable = require('formidable');
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+const { S3Client } = require('@aws-sdk/client-s3');
+require("dotenv").config();
+
+const db = require("./data/db.js");
+
 
 const cors = require('cors');
 
 const app = express();
 app.use(cors());
 
-
 const PORT = process.env.PORT || 3000;
-const config = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    server: process.env.DB_SERVER,
-    database: 'rdsadmin',
-    options: {
-        trustedConnection: false,
-        encrypt: false
-      }
-};
+
+const s3Client = new S3Client({
+    region: 'eu-west-1',
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    },
+});
 
 app.use(express.static(join(__dirname, "public")));
 
-// create the JWT middleware
+// middleware functions
+
 const checkJwt = auth({
     audience: authConfig.audience,
     issuerBaseURL: `https://${authConfig.domain}`
-  });
+});
 
 
-app.get("/api/external", checkJwt, (req, res) => {
+//https://dev-yr27mck7ia3usnqt.us.auth0.com/userinfo
+
+const upload = multer({
+    storage: multerS3({
+        s3: s3Client,
+        bucket: 'imgbckt',
+        key: function (req, file, cb) {
+            cb(null, Date.now().toString() + '-' + file.originalname);
+        },
+    }),
+});
+
+const checkProfile = async (token) => {
+    const userInfo = await fetch("https://dev-yr27mck7ia3usnqt.us.auth0.com/userinfo", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    const response = await userInfo.json();
+    //check if email exists
+    try {
+        const result = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${response.email}' OR email = 'ivan@gmail.com';`);
+
+        console.log(result.recordset);
+        //TODO: if no email create record for user
+
+    } catch (err) {
+        res.status(500).send('Database Error');
+    }
+};
+
+// endpoints
+
+app.get("/api/external", checkJwt, async (req, res) => {
+    
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+
+    await checkProfile(token);
+
     res.status(200).send({
         msg: "Your access token was successfully validated!"
     });
@@ -47,65 +86,26 @@ app.get("/auth_config.json", (req, res) => {
 });
 
 app.get("/sightings", async (_, res) => {
-
     try {
-        await sql.connect(config);
-
-        const result = await sql.query('SELECT * FROM spideyDb.dbo.Sightings;');
+        const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings;');
 
         res.json(result.recordset);
 
-    }catch (err) {
+    } catch (err) {
         res.status(500).send('Database Error');
-
-    }finally {
-        await sql.close();
     }
-
 });
 
-app.post('/upload', (req, res) => {
-    const formData = new formidable.IncomingForm();
+app.post('/upload', checkJwt, upload.single('image'), (req, res) => {
+    const uploadedFile = req.file;
+    const imageUrl = uploadedFile.location;
 
-    formData.parse(req, (err, fields, files) => {
-        if (err) {
-            console.error(err);
-            return res.status(400).json({ error: err });
-        }
-
-        const file = files.image;
-        const fileStream = fs.createReadStream(file.path);
-        const uploadParams = {
-            Bucket: 'imgbckt',
-            Key: file.name,
-            Body: fileStream
-        };
-
-        const upload = new Upload({
-            client: new S3Client({
-                region: 'eu-west-1',
-                credentials: {
-                    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-                    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-                }
-            }),
-            params: uploadParams
-        });
-
-        upload.done().then(() => {
-            res.status(200).send('Upload done!');   
-        }).catch((error) => {
-            console.log('Error uploading:', error);
-            res.status(500).send('Error uploading file.');
-        });
-
-    });
-
+    res.json({ message: 'Image uploaded successfully : ' + imageUrl });
 });
 
 // _______________________________ALL ENDPOINTS GO ABOVE THIS LINE______________________________________________________________________________________
 app.get("/", (_, res) => {
-  res.sendFile(join(__dirname, "index.html"));
+    res.sendFile(join(__dirname, "index.html"));
 });
 
 app.use((err, req, res, next) => {
