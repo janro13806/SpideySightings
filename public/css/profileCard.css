@@ -19,6 +19,9 @@
     --text: #000;
     --on-background: #E1E1E1;
     --test: #AAA;
+
+    --card-width: 20rem;
+    --card-height: 18rem;
 }
 
 /* * {
@@ -29,34 +32,34 @@
 } */
 
 .card {
-  width: 350px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   gap: 10px;
-  background-color: #fffffe;
+  background-color: var(--background);
   border-radius: 15px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
   transition: all 0.3s ease;
   font-family: 'Spiderman';
+  font-size: 16pt;
   margin: 1em;
 }
 
 .card::before {
   content: "";
-  width: 350px;
-  height: 100px;
+  width: var(--card-width);
+  height: 6rem;
   position: absolute;
   top: 0;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   border-bottom: 3px solid #fefefe;
-  /* background: linear-gradient(40deg, var(--primary) 0%, var(--secondary) 100%); */
   background: var(--secondary-alt);
   transition: all 0.3s ease;
 }
@@ -101,6 +104,7 @@
 
 .card-info p {
   color: rgba(0, 0, 0, 0.7);
+  margin: .5em;
 }
 
 .button {
@@ -116,7 +120,6 @@
 
 .button:hover {
   transform: translate(-0.25em, -0.25em);
-  background: transparent;
   box-shadow: 0.25em 0.25em var(--primary-alt);
 }
 
@@ -126,8 +129,8 @@
 }
 
 .card:hover::before {
-  width: 350px;
-  height: 300px;
+  width: var(--card-width);
+  height: var(--card-height);
   border-bottom: none;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;

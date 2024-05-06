@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Spiderman';
-  src: url('fonts/Comback-Home.ttf');
+  src: url('./Comback-Home.ttf');
 }
 
 .cardHolderH{
