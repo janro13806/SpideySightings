@@ -37,30 +37,27 @@ window.onload = async () => {
 
 const updateUI = async () => {
     const isAuthenticated = await auth0Client.isAuthenticated();
-    document.getElementById("btn-logout").disabled = !isAuthenticated;
     document.getElementById("btn-call-api").disabled = !isAuthenticated;
 
     if (isAuthenticated) {
         document.getElementById("gated-content").classList.remove("hidden");
 
-        document.getElementById(
-            "ipt-access-token"
-        ).innerHTML = await auth0Client.getTokenSilently();
+        //document.getElementById("profile-card").style.display = "block";
 
         const userData = JSON.stringify(await auth0Client.getUser());
         console.log(JSON.parse(userData).picture);
 
         document.getElementById("cardAvatar").src = JSON.parse(userData).picture;
-
-        document.getElementById(
-            "ipt-user-profile"
-        ).textContent = userData;
+        document.getElementById("name").innerHTML = JSON.parse(userData).name;
+        document.getElementById("email").innerHTML = JSON.parse(userData).email;
+        document.getElementById("SightingForm").style.display = "none";
 
         document.getElementById("btn-nav-login").removeEventListener("click", login);
         document.getElementById("btn-nav-login").addEventListener("click", logout);
         document.getElementById("btn-nav-login").textContent = 'Logout';
     } else {
         document.getElementById("gated-content").classList.add("hidden");
+        //document.getElementById("profile-card").style.display = "none";
 
         document.getElementById("btn-nav-login").removeEventListener("click", logout);
         document.getElementById("btn-nav-login").addEventListener("click", login);
@@ -105,6 +102,16 @@ const callApi = async () => {
     }
   };
 
+
+document.getElementById("postSightingBtn").addEventListener("click", (event) => {
+    const SightForm = document.getElementById("SightingForm");
+
+    if (SightForm.style.display === "none" || SightForm.style.display === ""){
+        SightForm.style.display = "block";
+    } else {
+        SightForm.style.display = "none";
+    }
+});
 
 document.getElementById('SightingForm').addEventListener('submit', async (event) => {
     event.preventDefault();
