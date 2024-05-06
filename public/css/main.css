@@ -3,6 +3,7 @@
   font-family: 'Spiderman';
   src: url('./Comback-Home.ttf');
 }
+
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap");
 
 :root {
@@ -54,6 +55,30 @@ pre {
 }
 
 /* ============
+   LOADER
+   ============ */
+
+#loader {
+  width: 5rem;
+  height: 5rem;
+  border: .5rem solid var(--on-background);
+  border-radius: 50%;
+  border-top: .5rem solid var(--primary);
+  border-bottom: .5rem solid var(--secondary-alt);
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============
    LOGIN BUTTON STYLES
    ============ */
 
@@ -77,4 +102,18 @@ pre {
 #btn-login:active {
   transform: translate(0);
   box-shadow: none;
+}
+
+/* mobile */
+
+@media screen and (max-width: 1030px) {
+
+  #loader {
+    width: 3rem;
+    height: 3rem;
+    border: .3rem solid var(--on-background);
+    border-top: .3rem solid var(--primary);
+    border-bottom: .3rem solid var(--secondary-alt);
+  }
+
 }

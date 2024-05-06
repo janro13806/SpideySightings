@@ -26,9 +26,9 @@
       <li>
         <button>Services</button>
         <ul class="submenu">
-          <li><button type="button">Location Tracker</button></li>
-          <li><button type="button">About</button></li>
-          <li><button type="button">Contact</button></li>
+          <li><button type="button">Profile</button></li>
+          <li><button type="button">My Sightings</button></li>
+          <li><button type="button">Search</button></li>
         </ul>
       </li>
       <li class="nav-login"><button type="button" id="btn-nav-login">Login</button></li>
@@ -36,7 +36,9 @@
     </ul>
   </nav>
 
-  <div class="card" id="profile-card">
+  <div id="loader"></div>
+
+  <article class="card" id="profile-card">
     <div class="image">
       <img id="cardAvatar" src="" alt="">
     </div>
@@ -45,7 +47,7 @@
       <p id="email"></p>
     </div>
     <button href="#" id="postSightingBtn" class="button">Post Sighting</button>
-  </div>
+  </article>
 
   <main class="hidden" id="gated-content">
 
