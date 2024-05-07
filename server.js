@@ -6,10 +6,7 @@ const multer = require("multer");
 const multerS3 = require("multer-s3");
 const { S3Client } = require('@aws-sdk/client-s3');
 require("dotenv").config();
-
 const db = require("./data/db.js");
-
-
 const cors = require('cors');
 
 const app = express();
@@ -18,7 +15,7 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 const s3Client = new S3Client({
-    region: 'eu-west-1',
+    region: process.env.REGION,
     credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -34,52 +31,55 @@ const checkJwt = auth({
     issuerBaseURL: `https://${authConfig.domain}`
 });
 
-
-//https://dev-yr27mck7ia3usnqt.us.auth0.com/userinfo
-
 const upload = multer({
     storage: multerS3({
         s3: s3Client,
-        bucket: 'imgbckt',
+        bucket: process.env.BUCKET,
         key: function (req, file, cb) {
             cb(null, Date.now().toString() + '-' + file.originalname);
         },
     }),
+    limits: {
+        fileSize: 1024 * 1024 * 10 // 10 MB limit
+    }
 });
 
-const getUserInfo = async (token) => {
-    const userInfo = await fetch("https://dev-yr27mck7ia3usnqt.us.auth0.com/userinfo", {
+const getUserInfo = async (token, res) => {
+    const userInfo = await fetch(process.env.USER_INFO, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     });
     const user = await userInfo.json();
+
     try {
         const result = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
-        console.log('Result: ' + result.recordset);
-        return result.recordset;
+        return result.recordset[0];
     } catch (err) {
-        res.status(500).send('Database Error : ' + err.message);
+        res.status(500).send({ msg: 'Database Error : ' + err.message });
     }
 };
 
-const checkProfile = async (token) => {
-    const user = await getUserInfo(token);
+const checkProfile = async (token, res) => {
+    const userInfo = await fetch(process.env.USER_INFO, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    const user = await userInfo.json();
 
     //check if email exists
     try {
         const result = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
 
-        console.log("Email exists?: " + result.recordset);
-
         if (result.recordset.length === 0) {
             const InsertResult = await db.query(`INSERT INTO spideyDb.dbo.Users (email) VALUES ('${user.email}');`);
 
-            console.log("Insert result: " + InsertResult.output);
+            res.status(201).send({ msg: 'Profile created' });
         }
 
     } catch (err) {
-        res.status(500).send('Database Error : ' + err.message);
+        res.status(500).send({ msg: 'Database Error : ' + err.message });
     }
 };
 
@@ -88,7 +88,7 @@ const checkProfile = async (token) => {
 app.get("/api/external", checkJwt, async (req, res) => {
     const authHeader = req.headers.authorization;
     const token = authHeader.split(' ')[1];
-    await checkProfile(token);
+    await checkProfile(token, res);
 
     res.status(200).send({
         msg: "Your access token was successfully validated!"
@@ -96,29 +96,39 @@ app.get("/api/external", checkJwt, async (req, res) => {
 });
 
 
-app.get("/auth_config.json", (req, res) => {
+app.get("/auth_config.json", (_, res) => {
     res.sendFile(join(__dirname, "auth_config.json"));
 });
 
 app.get("/sightings", async (_, res) => {
     try {
-        const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings ();');
+        const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings;');
 
-        res.json(result.recordset);
+        res.status(200).send(result.recordset);
 
     } catch (err) {
-        res.status(500).send('Database Error : ' + err.message);
+        res.status(500).send({ msg: 'Database Error : ' + err.message });
     }
 });
 
 app.post('/upload', checkJwt, upload.single('image'), async (req, res) => {
-    const { location, description, sightingTime } = req.body;
+    let { location, description, sightingTime } = req.body;
+    sightingTime = sightingTime.replace('T', ' ');
     const uploadedFile = req.file;
     const imageUrl = uploadedFile.location;
 
-    const UploadResult = await db.query(`INSERT INTO spidey`);
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+    const user = await getUserInfo(token, res);
 
-    res.json({ message: 'Image uploaded successfully : ' + imageUrl });
+    try {
+        const UploadResult = await db.query(`INSERT INTO spideyDb.dbo.Sightings (userId, location, image, description, timestamp) VALUES (${user.userId},'${location}','${imageUrl}','${description}','${sightingTime}');`);
+
+        res.status(201).send({ msg: 'Sighting uploaded successfully' });
+
+    } catch (err) {
+        res.status(500).send({ msg: 'Database Error : ' + err.message });
+    }
 });
 
 // _______________________________ALL ENDPOINTS GO ABOVE THIS LINE______________________________________________________________________________________
@@ -134,5 +144,11 @@ app.use((err, req, res, next) => {
     next(err, req, res);
 });
 
+app.use(function (_, res) {
+    res.status(404).send({
+        error: 404,
+        message: 'Not found'
+    });
+});
 
 app.listen(PORT, () => console.log("Application running on port " + PORT));
