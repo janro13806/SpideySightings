@@ -111,6 +111,17 @@ app.get("/sightings", async (_, res) => {
     }
 });
 
+app.get("/sightingsbyid", async (req, res) => {
+    try {
+        const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings WHERE userId=1;');
+
+        res.status(200).send(result.recordset);
+
+    } catch (err) {
+        res.status(500).send({ msg: 'Database Error : ' + err.message });
+    }
+});
+
 app.post('/upload', checkJwt, upload.single('image'), async (req, res) => {
     let { location, description, sightingTime } = req.body;
     sightingTime = sightingTime.replace('T', ' ');

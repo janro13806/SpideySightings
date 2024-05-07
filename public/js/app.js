@@ -1,3 +1,4 @@
+let user_id = 1
 let auth0Client = null;
 
 const fetchAuthConfig = () => fetch("/auth_config.json");
@@ -37,11 +38,22 @@ window.onload = async () => {
     }
 };
 
-const sightings = async () => {
-    let sightings = await getSightings();
 
+const sightingsbyid = async () => {
+    // Delete the main feed card holder (if it exists)
+    try {
+        let mainFeed = document.getElementById('main-feed');
+        mainFeed.remove();
+    } catch (error) {
+        console.log('Could not delete main feed.')
+    }
+
+
+    let sightings = await getSightingsById();
+    
     let cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");
+    cardHolder.id = 'my-sightings-feed';
 
     if (sightings != null) {
         for (i = 0; i < sightings.length; i++) {
@@ -51,6 +63,10 @@ const sightings = async () => {
 
             //id of the user, will need to use another api call to get user info
             let userId = sightings[i]['userId'];
+
+            if (userId != user_id) {
+                continue;
+            }
 
             //information show for each post
             let location = sightings[i]['location'];
@@ -66,13 +82,11 @@ const sightings = async () => {
 
             //create card
             let card = document.createElement('section');
-            // card.classList.add("cardH");
-            card.classList.add("card2");
+            card.classList.add("card-feed");
             //create image
             let cardImage = document.createElement('img');
             cardImage.classList.add("card-image");
             cardImage.src = imageURL;
-            // cardImage.src = 'https://imgbckt.s3.eu-west-1.amazonaws.com/spider-man-comic-7v7z18wgya32repe.jpg';
             card.appendChild(cardImage);
 
             let cardContent = document.createElement('section');
@@ -98,9 +112,101 @@ const sightings = async () => {
     }
 };
 
+const sightings = async () => {
+    // Delete the my sightings feed card holder (if it exists)
+    try {
+        let mainFeed = document.getElementById('my-sightings-feed');
+        mainFeed.remove();
+    } catch (error) {
+        console.log('Could not delete my sightings feed.')
+    }
+    let sightings = await getSightings();
+
+    let cardHolder = document.createElement('section');
+    cardHolder.classList.add("cardHolder");
+    cardHolder.id = 'main-feed';
+
+    if (sightings != null) {
+        for (i = 0; i < sightings.length; i++) {
+
+            //id of the post
+            let sightingId = sightings[i]['sightingId'];
+
+            //id of the user, will need to use another api call to get user info
+            let userId = sightings[i]['userId'];
+
+            //information show for each post
+            let location = sightings[i]['location'];
+            let imageURL = sightings[i]['image'];
+            let description = sightings[i]['description'];
+
+            let timestamp = sightings[i]['timestamp'];
+            let dateTime = new Date(timestamp);
+            let date = dateTime.toDateString();
+            let hours = dateTime.getHours();
+            let minutes = dateTime.getMinutes();
+            let time = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+
+            //create card
+            let card = document.createElement('section');
+            card.classList.add("card-feed");
+            //create image
+            let cardImage = document.createElement('img');
+            cardImage.classList.add("card-image");
+            cardImage.src = imageURL;
+            card.appendChild(cardImage);
+
+            let cardContent = document.createElement('section');
+            cardContent.classList.add('card__content');
+
+            let cardTitle = document.createElement('p');
+            cardTitle.classList.add('card__title');
+            cardTitle.innerHTML = 'Spidey sighted in ' + location + '!<br>' + date;
+            cardContent.appendChild(cardTitle);
+
+            let cardDesc = document.createElement('p');
+            cardDesc.classList.add('card__description');
+            cardDesc.innerHTML = 'Spider-man was sighted on ' + date + ' at ' + time + '! <br><br>' + description;
+            cardContent.appendChild(cardDesc);
+
+            card.appendChild(cardContent);
+
+            cardHolder.appendChild(card);
+        }
+
+        let body = document.body;
+        body.appendChild(cardHolder);
+    }
+};
+
+async function ViewMySightingClicked()
+{
+    await sightingsbyid();
+}
+
+async function ViewMainFeedClicked()
+{
+    await sightings();
+}
+
+
 async function getSightings() {
     try {
         const response = await fetch('http://localhost:8080/sightings');
+        if (!response.ok) {
+            console.log(response.text());
+            throw new Error('Woopsie, API broke');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+async function getSightingsById() {
+    try {
+        const response = await fetch('http://localhost:8080/sightingsbyid');
         if (!response.ok) {
             console.log(response.text());
             throw new Error('Woopsie, API broke');
