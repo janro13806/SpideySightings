@@ -47,32 +47,47 @@ const upload = multer({
     }),
 });
 
-const checkProfile = async (token) => {
+const getUserInfo = async (token) => {
     const userInfo = await fetch("https://dev-yr27mck7ia3usnqt.us.auth0.com/userinfo", {
         headers: {
             Authorization: `Bearer ${token}`
         }
     });
-    const response = await userInfo.json();
+    const user = await userInfo.json();
+    try {
+        const result = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
+        console.log('Result: ' + result.recordset);
+        return result.recordset;
+    } catch (err) {
+        res.status(500).send('Database Error : ' + err.message);
+    }
+};
+
+const checkProfile = async (token) => {
+    const user = await getUserInfo(token);
+
     //check if email exists
     try {
-        const result = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${response.email}' OR email = 'ivan@gmail.com';`);
+        const result = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
 
-        console.log(result.recordset);
-        //TODO: if no email create record for user
+        console.log("Email exists?: " + result.recordset);
+
+        if (result.recordset.length === 0) {
+            const InsertResult = await db.query(`INSERT INTO spideyDb.dbo.Users (email) VALUES ('${user.email}');`);
+
+            console.log("Insert result: " + InsertResult.output);
+        }
 
     } catch (err) {
-        res.status(500).send('Database Error');
+        res.status(500).send('Database Error : ' + err.message);
     }
 };
 
 // endpoints
 
 app.get("/api/external", checkJwt, async (req, res) => {
-    
     const authHeader = req.headers.authorization;
     const token = authHeader.split(' ')[1];
-
     await checkProfile(token);
 
     res.status(200).send({
@@ -87,18 +102,21 @@ app.get("/auth_config.json", (req, res) => {
 
 app.get("/sightings", async (_, res) => {
     try {
-        const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings;');
+        const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings ();');
 
         res.json(result.recordset);
 
     } catch (err) {
-        res.status(500).send('Database Error');
+        res.status(500).send('Database Error : ' + err.message);
     }
 });
 
-app.post('/upload', checkJwt, upload.single('image'), (req, res) => {
+app.post('/upload', checkJwt, upload.single('image'), async (req, res) => {
+    const { location, description, sightingTime } = req.body;
     const uploadedFile = req.file;
     const imageUrl = uploadedFile.location;
+
+    const UploadResult = await db.query(`INSERT INTO spidey`);
 
     res.json({ message: 'Image uploaded successfully : ' + imageUrl });
 });
