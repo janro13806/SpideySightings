@@ -54,7 +54,7 @@
     <button id="btn-call-api" disabled="true" type="button" onclick="callApi()">Call Api</button>
     <pre id="api-call-result"></pre>
 
-    <form id="SightingForm" action="">
+    <form id="SightingForm" action="/upload" method="POST" enctype="multipart/form-data">
       <span class="formTitle">Create a new Sightings</span>
       <span class="subTitle">Where did you see Spiderman?</span>
       <input class="input" id="location" name="location" placeholder="location" type="text" required />
