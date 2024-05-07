@@ -6,73 +6,14 @@
   align-items: center;
 }
 
-.cardH{
-  backdrop-filter: blur(0.25em); 
-
-}
-
-.cardTitleH{
-  font-family: 'Spiderman';
-  font-size: 3em;
-  backdrop-filter: blur(0.25em); 
-
-}
-
-.cardContentH{
-  /*set the absolute position of children of cardContent relative to it*/
-  position: relative;
-  backdrop-filter: blur(0.25em); 
-
-}
-
-.cardImageH{
-  width: 40em;
-  backdrop-filter: blur(10px); 
-}
-
-.cardImageH:hover{
-  backdrop-filter: blur(100px); 
-}
-
-.cardDescriptionH{
-  display: none;
-
-  /*place the text to the top of .cardContent*/
-  position:absolute;
-  top: 0;
-  left: 0;
-
-  padding: 1em;
-  font-size: 1.5em;
-  font-family: 'Arial Rounded MT Bold';
-  /* backdrop-filter: blur(0.25em);  */
-
-}
-
-.cardContentH:hover .cardDescriptionH{
-  display: block;
-  /* transform: rotateX(0deg);   */
-
-}
-
-.cardContentH:hover .cardImageH{
-  /* opacity: 0.4; */
-   backdrop-filter: blur(0.25em); 
-  }
-
-/* ********************************************************* */
 .card-image {
   max-width:20em;
   min-width: 100%;
   max-height: 20em;
   min-height: 100%;
-  /* object-fit: cover;
-  position: relative; */
 }
 
-
-.card2 {
-  /* position: relative; */
+.card-feed {
   display: flex;
   /*set the main axis to be vertical*/
   flex-direction: column;
@@ -91,10 +32,10 @@
   justify-content: center;
   overflow: hidden;
   perspective: 100em;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)
 }
 
-.card2:hover {
+.card-feed:hover {
   transform: scale(1.05);
   box-shadow: 0 0.05em 0.05em rgba(255, 255, 255, 0.2);
 }
@@ -111,12 +52,12 @@
   background-color: rgb(255, 255, 255, .5);
   transform: rotateX(-90deg);
   transform-origin: bottom;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   color: var(--primary-text);
   text-align: center;
 }
 
-.card2:hover .card__content {
+.card-feed:hover .card__content {
   transform: rotateX(0deg);
 }
 
@@ -128,16 +69,5 @@
 }
 
 .card__description {
-  /* margin: 10px 0 0; */
-  /* font-size: 14px; */
-  /* color: #777; */
-  /* line-height: 1.4; */
-}
 
-.cardHolderH{
-  display: flex;
-  /*set the main axis to be vertical*/
-  flex-direction: column;
-  /*center align items on the cross axis*/
-  align-items: center;
 }

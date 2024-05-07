@@ -82,8 +82,7 @@ const sightingsbyid = async () => {
 
             //create card
             let card = document.createElement('section');
-            // card.classList.add("cardH");
-            card.classList.add("card2");
+            card.classList.add("card-feed");
             //create image
             let cardImage = document.createElement('img');
             cardImage.classList.add("card-image");
@@ -150,8 +149,7 @@ const sightings = async () => {
 
             //create card
             let card = document.createElement('section');
-            // card.classList.add("cardH");
-            card.classList.add("card2");
+            card.classList.add("card-feed");
             //create image
             let cardImage = document.createElement('img');
             cardImage.classList.add("card-image");
