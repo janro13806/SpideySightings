@@ -123,7 +123,7 @@ app.post('/upload', checkJwt, upload.single('image'), async (req, res) => {
 
     try {
         const UploadResult = await db.query(`INSERT INTO spideyDb.dbo.Sightings (userId, location, image, description, timestamp) VALUES (${user.userId},'${location}','${imageUrl}','${description}','${sightingTime}');`);
-
+        
         res.status(201).send({ msg: 'Sighting uploaded successfully' });
 
     } catch (err) {

@@ -1,20 +1,9 @@
-:root {
-    --primary: #B11313;
-    --primary-alt: #DF1F2D;
-    --secondary: #2B3784;
-    --secondary-alt: #447BBE;
-    --content: #FFF;
-    --background: #F3F3F3;
-    --text: #000;
-    --on-background: #E1E1E1;
-}
-
 nav {
     width: 100%;
     container: navigation / inline-size;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 

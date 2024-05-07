@@ -8,6 +8,11 @@ const config = {
     options: {
         trustedConnection: false,
         encrypt: false
+    },
+    pool: {
+        max: 150,
+        min: 0,
+        idleTimeoutMillis: 30000
     }
 };
 

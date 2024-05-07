@@ -1,8 +1,3 @@
-@font-face {
-  font-family: 'Spiderman';
-  src: url('./Comback-Home.ttf');
-}
-
 .cardHolderH{
   display: flex;
   /*set the main axis to be vertical*/
@@ -83,7 +78,7 @@
   flex-direction: column;
   /*center align items on the cross axis*/
   align-items: center;
-  margin: 1em;
+  margin: 2em;
   max-width: 50em;
   border-radius: 0.5em;    
   box-shadow: 0.4em 0.4em;
@@ -96,7 +91,7 @@
   justify-content: center;
   overflow: hidden;
   perspective: 100em;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
 }
 
 .card2:hover {
@@ -112,12 +107,13 @@
   height: 100%;
   padding: 0.5em;
   box-sizing: border-box;
-  backdrop-filter: blur(0.25em);
-  background-color: rgb(255, 255, 255, .3);
+  backdrop-filter: blur(0.5em);
+  background-color: rgb(255, 255, 255, .5);
   transform: rotateX(-90deg);
   transform-origin: bottom;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  font-family: 'Arial Rounded MT Bold';
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: var(--primary-text);
+  text-align: center;
 }
 
 .card2:hover .card__content {
