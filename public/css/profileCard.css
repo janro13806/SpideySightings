@@ -4,26 +4,6 @@
     src: url('./Comback-Home.ttf');
 }
 
-:root {
-    --input-focus: #2d8cf0;
-    --font-color: #323232;
-    --font-color-sub: #666;
-    --bg-color: beige;
-    --main-color: black;  
-    --primary: #B11313;
-    --primary-alt: #DF1F2D;
-    --secondary: #2B3784;
-    --secondary-alt: #447BBE;
-    --content: #FFF;
-    --background: #F3F3F3;
-    --text: #000;
-    --on-background: #E1E1E1;
-    --test: #AAA;
-
-    --card-width: 20rem;
-    --card-height: 18rem;
-}
-
 /* * {
   margin: 0;
   padding: 0;
@@ -92,6 +72,8 @@
   align-items: center;
   gap: 15px;
   transition: all 0.3s ease;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
 }
 
 .card-info span {
@@ -134,7 +116,7 @@
   border-bottom: none;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  transform: scale(0.95);
+  transform: scaleX(calc(var(--card-width) * 0.975)) scaleY(0.95);
 }
 
 .card:hover .card-info {
@@ -160,5 +142,5 @@
 }
 
 .card:hover .image {
-  transform: scale(2) translate(-60%, -40%);
+  transform: scale(2) translate(0%, -40%);
 }

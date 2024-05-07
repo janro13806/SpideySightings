@@ -19,6 +19,7 @@ window.onload = async () => {
     await configureClient();
     updateUI();
     await sightings();
+    document.getElementById("loader").classList.toggle("hidden");
 
     const isAuthenticated = await auth0Client.isAuthenticated();
 
@@ -42,8 +43,8 @@ const sightings = async () => {
     let cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");
 
-    if(sightings != null){
-        for(i=0; i<sightings.length; i++){
+    if (sightings != null) {
+        for (i = 0; i < sightings.length; i++) {
 
             //id of the post
             let sightingId = sightings[i]['sightingId'];
@@ -97,43 +98,45 @@ const sightings = async () => {
     }
 };
 
-function getSightings(){
-
-    return fetch('http://localhost:8080/sightings')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Woopsie, API broke');
-            }
-            return response.json();
-        })
-        .catch(error => {
-            console.error(error);
-            return null;
-        });
-
+async function getSightings() {
+    try {
+        const response = await fetch('http://localhost:8080/sightings');
+        if (!response.ok) {
+            console.log(response.text());
+            throw new Error('Woopsie, API broke');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
 }
+
+const displayProfile = async () => {
+    const userData = JSON.stringify(await auth0Client.getUser());
+    if (userData.length > 0) {
+        document.getElementById("profile-card").classList.toggle("hidden");
+        document.getElementById("cardAvatar").src = JSON.parse(userData).picture;
+        document.getElementById("name").innerHTML = JSON.parse(userData).name;
+        document.getElementById("email").innerHTML = JSON.parse(userData).email;
+    }
+};
 
 const updateUI = async () => {
     const isAuthenticated = await auth0Client.isAuthenticated();
     document.getElementById("btn-call-api").disabled = !isAuthenticated;
 
     if (isAuthenticated) {
-        document.getElementById("gated-content").classList.remove("hidden");
+        document.getElementById("gated-content").classList.toggle("hidden");
 
         //document.getElementById("profile-card").style.display = "block";
-
-        const userData = JSON.stringify(await auth0Client.getUser());
-
-        document.getElementById("cardAvatar").src = JSON.parse(userData).picture;
-        document.getElementById("name").innerHTML = JSON.parse(userData).name;
-        document.getElementById("email").innerHTML = JSON.parse(userData).email;
         document.getElementById("SightingForm").style.display = "none";
 
         document.getElementById("btn-nav-login").removeEventListener("click", login);
         document.getElementById("btn-nav-login").addEventListener("click", logout);
         document.getElementById("btn-nav-login").textContent = 'Logout';
     } else {
-        document.getElementById("gated-content").classList.add("hidden");
+        document.getElementById("gated-content").classList.toggle("hidden");
         //document.getElementById("profile-card").style.display = "none";
 
         document.getElementById("btn-nav-login").removeEventListener("click", logout);
@@ -205,18 +208,18 @@ document.getElementById('SightingForm').addEventListener('submit', async (event)
     console.log("🚀 ~ document.getElementById ~ image:", image);
 
     fetch('/upload', {
-        method : 'POST',
+        method: 'POST',
         body: formData,
         headers: {
             Authorization: `Bearer ${token}`
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success : ', data);
-    })
-    .catch((error) => {
-         console.error('Error : ', error);
-     });
-    
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success : ', data);
+        })
+        .catch((error) => {
+            console.error('Error : ', error);
+        });
+
 });

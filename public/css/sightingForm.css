@@ -1,25 +1,3 @@
-/* import the spiderman font */
-@font-face {
-    font-family: 'Spiderman';
-    src: url('./Comback-Home.ttf');
-}
-
-:root {
-    --input-focus: #2d8cf0;
-    --font-color: #323232;
-    --font-color-sub: #666;
-    --bg-color: beige;
-    --main-color: black;  
-    --primary: #B11313;
-    --primary-alt: #DF1F2D;
-    --secondary: #2B3784;
-    --secondary-alt: #447BBE;
-    --content: #FFF;
-    --background: #F3F3F3;
-    --text: #000;
-    --on-background: #E1E1E1; 
-}
-
 .custom-file-upload {
     height: 6em;
     width: 15em;

@@ -7,7 +7,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap");
 
 :root {
+  --input-focus: #2d8cf0;
+  --font-color: #323232;
+  --font-color-sub: #666;
+  --bg-color: beige;
+  --main-color: black;  
   --primary: #B11313;
+  --primary-text: rgb(69, 0, 0);
   --primary-alt: #DF1F2D;
   --secondary: #2B3784;
   --secondary-alt: #447BBE;
@@ -15,6 +21,13 @@
   --background: #F3F3F3;
   --text: #000;
   --on-background: #E1E1E1;
+  --test: #AAA;
+
+  --card-width: 100%;
+  --card-height: 20rem;
+
+  --loader-width: 5rem;
+  --loader-height: 5rem;
 }
 
 body {
@@ -29,6 +42,8 @@ body {
   background-image: linear-gradient(0deg, transparent 24%, var(--on-background) 25%, var(--on-background) 26%, transparent 27%, transparent 74%, var(--on-background) 75%, var(--on-background) 76%, transparent 77%, transparent),
     linear-gradient(90deg, transparent 24%, var(--on-background) 25%, var(--on-background) 26%, transparent 27%, transparent 74%, var(--on-background) 75%, var(--on-background) 76%, transparent 77%, transparent);
   background-size: 55px 55px;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 h1 {
@@ -38,8 +53,16 @@ h1 {
   margin: 0 1em 0 0;
 }
 
+figure {
+  margin: 0;
+}
+
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.blur {
+  filter: blur(5px);
 }
 
 label {
@@ -59,13 +82,17 @@ pre {
    ============ */
 
 #loader {
-  width: 5rem;
-  height: 5rem;
+  position: fixed;
+  left: calc(50% - calc(var(--loader-width) / 2));
+  top: calc(50% - calc(var(--loader-height) / 2));
+  width: var(--loader-width);
+  height: var(--loader-height);
   border: .5rem solid var(--on-background);
   border-radius: 50%;
   border-top: .5rem solid var(--primary);
   border-bottom: .5rem solid var(--secondary-alt);
   animation: spin 2s linear infinite;
+  z-index: 99;
 }
 
 @keyframes spin {
@@ -109,8 +136,8 @@ pre {
 @media screen and (max-width: 1030px) {
 
   #loader {
-    width: 3rem;
-    height: 3rem;
+    width: calc(var(--loader-width) / 2);
+    height: calc(var(--loader-height) / 2);
     border: .3rem solid var(--on-background);
     border-top: .3rem solid var(--primary);
     border-bottom: .3rem solid var(--secondary-alt);
