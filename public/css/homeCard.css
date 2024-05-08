@@ -19,9 +19,10 @@
   flex-direction: column;
   /*center align items on the cross axis*/
   align-items: center;
-  margin: 2em;
+  /* margin: 2em; */
+  margin-bottom: 2em;
   max-width: 50em;
-  border-radius: 0.5em;    
+  /* border-radius: 0.5em;     */
   box-shadow: 0.4em 0.4em;
   align-items: center;
   background: var(--background);
@@ -40,7 +41,7 @@
   box-shadow: 0 0.05em 0.05em rgba(255, 255, 255, 0.2);
 }
 
-.card__content {
+.card-content {
   position: absolute;
   bottom: -100%;
   width: 100%;
@@ -59,17 +60,35 @@
   align-items: center;
 }
 
-.card-feed:hover .card__content {
+.card-feed:hover .card-content {
   bottom: 0;
 }
 
-.card__title {
+.card-title {
   font-family: 'Spiderman';
   margin: 0;
   font-size: 2em;
   font-weight: 700;
 }
 
-.card__description {
+.card-description {
 
+}
+
+.card-heading {
+  /* display: flex;
+  flex-direction: column;
+  /*center align items on the cross axis*/
+  /* align-items: center;  */
+  font-family: 'Spiderman';
+  /* margin: 0; */
+  font-size: 2em;
+  font-weight: 700;
+  background-color: #447BBE;
+  margin-bottom: 0.25em;
+}
+
+.card-heading-time {
+  margin: 20%;
+  font-size: 0.5em;
 }

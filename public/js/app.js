@@ -90,15 +90,15 @@ const sightingsbyid = async () => {
             card.appendChild(cardImage);
 
             let cardContent = document.createElement('section');
-            cardContent.classList.add('card__content');
+            cardContent.classList.add('card-content');
 
             let cardTitle = document.createElement('p');
-            cardTitle.classList.add('card__title');
+            cardTitle.classList.add('card-title');
             cardTitle.innerHTML = 'Spidey sighted in ' + location + '!<br>' + date;
             cardContent.appendChild(cardTitle);
 
             let cardDesc = document.createElement('p');
-            cardDesc.classList.add('card__description');
+            cardDesc.classList.add('card-description');
             cardDesc.innerHTML = 'Spider-man was sighted on ' + date + ' at ' + time + '! <br><br>' + description;
             cardContent.appendChild(cardDesc);
 
@@ -157,20 +157,21 @@ const sightings = async () => {
             card.appendChild(cardImage);
 
             let cardContent = document.createElement('section');
-            cardContent.classList.add('card__content');
+            cardContent.classList.add('card-content');
 
             let cardTitle = document.createElement('p');
-            cardTitle.classList.add('card__title');
+            cardTitle.classList.add('card-title');
             cardTitle.innerHTML = 'Spidey sighted in ' + location + '!<br>' + date;
             cardContent.appendChild(cardTitle);
 
             let cardDesc = document.createElement('p');
-            cardDesc.classList.add('card__description');
+            cardDesc.classList.add('card-description');
             cardDesc.innerHTML = 'Spider-man was sighted on ' + date + ' at ' + time + '! <br><br>' + description;
             cardContent.appendChild(cardDesc);
 
             card.appendChild(cardContent);
 
+            // header.appendChild(card);
             cardHolder.appendChild(card);
         }
 
