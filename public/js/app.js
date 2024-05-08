@@ -94,12 +94,22 @@ const sightingsbyid = async () => {
 
             let cardTitle = document.createElement('p');
             cardTitle.classList.add('card-title');
-            cardTitle.innerHTML = 'Spidey sighted in ' + location + '!<br>' + date;
+            cardTitle.innerText = 'Spidey sighted in ' + location + '!';
+
+            let cardTitleDate = document.createElement('p');
+            cardTitleDate.innerText = date;
+            cardTitle.appendChild(cardTitleDate);
+
             cardContent.appendChild(cardTitle);
 
             let cardDesc = document.createElement('p');
             cardDesc.classList.add('card-description');
-            cardDesc.innerHTML = 'Spider-man was sighted on ' + date + ' at ' + time + '! <br><br>' + description;
+            cardDesc.innerText = 'Spider-man was sighted on ' + date + ' at ' + time;
+
+            let cardDescInner = document.createElement('p');
+            cardDescInner.innerText = description;
+            cardDesc.appendChild(cardDescInner);
+
             cardContent.appendChild(cardDesc);
 
             card.appendChild(cardContent);
@@ -195,7 +205,6 @@ const sightings = async () => {
 
             card.appendChild(cardContent);
 
-            // header.appendChild(card);
             cardHolder.appendChild(card);
         }
 
