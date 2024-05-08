@@ -111,16 +111,34 @@ app.get("/sightings", async (_, res) => {
     }
 });
 
-app.get("/sightingsbyid", async (req, res) => {
+app.post("/sightingsbyid", async (req, res) => {
+
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+
+    const userInfo = await fetch(process.env.USER_INFO, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    const user = await userInfo.json();
+    
     try {
-        const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings WHERE userId=1;');
-
+        //get userID
+        const result_id = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
+        //const user_id = result_id.recordset[0].userId;
+        user_id = 1;
+    
+        //get sightings made by userID
+        const result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE userId=${user_id};`);
         res.status(200).send(result.recordset);
-
-    } catch (err) {
+    }
+    catch (err) {
         res.status(500).send({ msg: 'Database Error : ' + err.message });
     }
+
 });
+
 
 app.post('/upload', checkJwt, upload.single('image'), async (req, res) => {
     let { location, description, sightingTime } = req.body;

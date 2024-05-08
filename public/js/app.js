@@ -94,12 +94,22 @@ const sightingsbyid = async () => {
 
             let cardTitle = document.createElement('p');
             cardTitle.classList.add('card__title');
-            cardTitle.innerHTML = 'Spidey sighted in ' + location + '!<br>' + date;
+            cardTitle.innerText = 'Spidey sighted in ' + location + '!';
+
+            let cardTitleDate = document.createElement('p');
+            cardTitleDate.innerText = date;
+            cardTitle.appendChild(cardTitleDate);
+
             cardContent.appendChild(cardTitle);
 
             let cardDesc = document.createElement('p');
             cardDesc.classList.add('card__description');
-            cardDesc.innerHTML = 'Spider-man was sighted on ' + date + ' at ' + time + '! <br><br>' + description;
+            cardDesc.innerText = 'Spider-man was sighted on ' + date + ' at ' + time;
+
+            let cardDescInner = document.createElement('p');
+            cardDescInner.innerText = description;
+            cardDesc.appendChild(cardDescInner);
+
             cardContent.appendChild(cardDesc);
 
             card.appendChild(cardContent);
@@ -161,13 +171,24 @@ const sightings = async () => {
 
             let cardTitle = document.createElement('p');
             cardTitle.classList.add('card__title');
-            cardTitle.innerHTML = 'Spidey sighted in ' + location + '!<br>' + date;
+            cardTitle.innerText = 'Spidey sighted in ' + location + '!';
+
+            let cardTitleDate = document.createElement('p');
+            cardTitleDate.innerText = date;
+            cardTitle.appendChild(cardTitleDate);
+
             cardContent.appendChild(cardTitle);
 
             let cardDesc = document.createElement('p');
             cardDesc.classList.add('card__description');
-            cardDesc.innerHTML = 'Spider-man was sighted on ' + date + ' at ' + time + '! <br><br>' + description;
+            cardDesc.innerText = 'Spider-man was sighted on ' + date + ' at ' + time;
+
+            let cardDescInner = document.createElement('p');
+            cardDescInner.innerText = description;
+            cardDesc.appendChild(cardDescInner);
+
             cardContent.appendChild(cardDesc);
+
 
             card.appendChild(cardContent);
 
@@ -205,17 +226,26 @@ async function getSightings() {
 }
 
 async function getSightingsById() {
-    try {
-        const response = await fetch('http://localhost:8080/sightingsbyid');
-        if (!response.ok) {
-            console.log(response.text());
-            throw new Error('Woopsie, API broke');
+        const token = await auth0Client.getTokenSilently();
+
+        try{
+            const response = await fetch('/sightingsbyid', {
+                method: 'POST',
+                body: JSON.stringify({}),
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                console.log(response.text());
+                throw new Error('Woopsie, API broke');
+            }
+            return await response.json();
         }
-        return await response.json();
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
+        catch(err){
+            console.error(error);
+            return null;
+        }
 }
 
 const displayProfile = async () => {
@@ -223,8 +253,8 @@ const displayProfile = async () => {
     if (userData.length > 0) {
         document.getElementById("profile-card").classList.toggle("hidden");
         document.getElementById("cardAvatar").src = JSON.parse(userData).picture;
-        document.getElementById("name").innerHTML = JSON.parse(userData).name;
-        document.getElementById("email").innerHTML = JSON.parse(userData).email;
+        document.getElementById("name").innerText = JSON.parse(userData).name;
+        document.getElementById("email").innerText = JSON.parse(userData).email;
     }
 };
 
