@@ -196,6 +196,10 @@ const sightingsbyid = async () => {
     }
 };
 
+document.getElementById("profile").addEventListener("click", () => {
+    document.getElementById('profile-card').classList.toggle('hidden');
+});
+
 const sightings = async () => {
     // Delete the my sightings feed card holder (if it exists)
     try {
@@ -311,8 +315,7 @@ async function getSightingsById() {
                 }
             });
             if (!response.ok) {
-                console.log(response.text());
-                throw new Error('Woopsie, API broke');
+                throw new Error(response.text());
             }
             return await response.json();
         }
@@ -379,6 +382,7 @@ const updateUI = async () => {
     document.getElementById("btn-call-api").disabled = !isAuthenticated;
 
     if (isAuthenticated) {
+        await checkProfile();
         document.getElementById("gated-content").classList.toggle("hidden");
 
         //document.getElementById("profile-card").style.display = "block";
@@ -394,6 +398,26 @@ const updateUI = async () => {
         document.getElementById("btn-nav-login").removeEventListener("click", logout);
         document.getElementById("btn-nav-login").addEventListener("click", login);
         document.getElementById("btn-nav-login").textContent = 'Login';
+    }
+};
+
+const checkProfile = async () => {
+    //Send request to check user profile
+    try{
+        const token = await auth0Client.getTokenSilently();
+        const response = await fetch('/profile', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        console.log(response);
+        if (!response.ok) {
+            throw new Error(response.text());
+        }
+    }
+    catch(err){
+        console.error(err);
     }
 };
 
