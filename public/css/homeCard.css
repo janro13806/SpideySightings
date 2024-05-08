@@ -32,7 +32,7 @@
   justify-content: center;
   overflow: hidden;
   perspective: 100em;
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+  transition: all .3s ease;
 }
 
 .card-feed:hover {
@@ -42,23 +42,25 @@
 
 .card__content {
   position: absolute;
-  top: 0;
-  left: 0;
+  bottom: -100%;
   width: 100%;
   height: 100%;
   padding: 0.5em;
   box-sizing: border-box;
   backdrop-filter: blur(0.5em);
   background-color: rgb(255, 255, 255, .5);
-  transform: rotateX(-90deg);
-  transform-origin: bottom;
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all .2s ease;
   color: var(--primary-text);
   text-align: center;
+
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-feed:hover .card__content {
-  transform: rotateX(0deg);
+  bottom: 0;
 }
 
 .card__title {
