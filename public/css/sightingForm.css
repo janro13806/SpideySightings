@@ -43,13 +43,13 @@
     color: rgba(75, 85, 99, 1);
 }
 
-/* .custom-file-upload input {
+.custom-file-upload input {
     display: none;
-} */
+}
 
 /* FORM Below */
 #SightingForm {
-    width: 85vw;
+    width: 100%;
     padding: 2em;
     background-color: var(--secondary-alt);
     display: flex;
@@ -80,7 +80,7 @@
 }
 
 .input {
-    width: 78vw;
+    width: 80%;
     height: 6vh;
     border-radius: 0.2em;
     border: 0.05em solid var(--text);

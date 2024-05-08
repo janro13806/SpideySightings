@@ -107,7 +107,7 @@ const sightingsbyid = async () => {
             cardHolder.appendChild(card);
         }
 
-        let body = document.body;
+        const body = document.body;
         body.appendChild(cardHolder);
     }
 };
@@ -115,14 +115,14 @@ const sightingsbyid = async () => {
 const sightings = async () => {
     // Delete the my sightings feed card holder (if it exists)
     try {
-        let mainFeed = document.getElementById('my-sightings-feed');
+        const mainFeed = document.getElementById('my-sightings-feed');
         mainFeed.remove();
     } catch (error) {
         console.log('Could not delete my sightings feed.')
     }
-    let sightings = await getSightings();
+    const sightings = await getSightings();
 
-    let cardHolder = document.createElement('section');
+    const cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");
     cardHolder.id = 'main-feed';
 
@@ -130,10 +130,10 @@ const sightings = async () => {
         for (i = 0; i < sightings.length; i++) {
 
             //id of the post
-            let sightingId = sightings[i]['sightingId'];
+            const sightingId = sightings[i]['sightingId'];
 
             //id of the user, will need to use another api call to get user info
-            let userId = sightings[i]['userId'];
+            const userId = sightings[i]['userId'];
 
             //information show for each post
             let location = sightings[i]['location'];
@@ -304,28 +304,30 @@ document.getElementById('SightingForm').addEventListener('submit', async (event)
     const formData = new FormData(event.target);
     const token = await auth0Client.getTokenSilently();
 
-    const location = formData.get('location');
-    console.log("🚀 ~ document.getElementById ~ location:", location);
-    const description = formData.get('description');
-    console.log("🚀 ~ document.getElementById ~ description:", description);
-    const sightingTime = formData.get('sightingTime');
-    console.log("🚀 ~ document.getElementById ~ sightingTime:", sightingTime);
-    const image = formData.get('image');
-    console.log("🚀 ~ document.getElementById ~ image:", image);
-
     fetch('/upload', {
         method: 'POST',
         body: formData,
         headers: {
             Authorization: `Bearer ${token}`
         }
+    }).then(response => response.json())
+    .then(data => {
+        console.log('Success : ', data);
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success : ', data);
-        })
-        .catch((error) => {
-            console.error('Error : ', error);
-        });
-
+    .catch((error) => {
+        console.error('Error : ', error);
+    });
 });
+
+const input = document.getElementById('sightImage');
+const fileNameDisplay = document.getElementById('fileName');
+
+input.onchange = () => {
+
+    if (input.files && input.files.length > 0) {
+        const fileName = input.files[0].name;
+        fileNameDisplay.textContent = fileName;
+    } else {
+        fileNameDisplay.textContent = "No file selected";
+    }
+};
