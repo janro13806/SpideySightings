@@ -56,7 +56,7 @@ const getUserInfo = async (token, res) => {
         const result = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
         return result.recordset[0];
     } catch (err) {
-        res.status(500).send({ msg: 'Database Error : ' + err.message });
+        res.status(500).json({ msg: 'Database Error : ' + err.message });
     }
 };
 
@@ -75,22 +75,27 @@ const checkProfile = async (token, res) => {
         if (result.recordset.length === 0) {
             const InsertResult = await db.query(`INSERT INTO spideyDb.dbo.Users (email) VALUES ('${user.email}');`);
 
-            res.status(201).send({ msg: 'Profile created' });
+            res.status(201).json({ msg: 'Profile created' });
+        }
+        else {
+            res.status(200).json({ msg: 'Profile already exists' });
         }
 
     } catch (err) {
-        res.status(500).send({ msg: 'Database Error : ' + err.message });
+        res.status(500).json({ msg: 'Database Error : ' + err.message });
     }
 };
 
 // endpoints
 
-app.get("/api/external", checkJwt, async (req, res) => {
+app.post("/profile", checkJwt, async (req, res) => {
     const authHeader = req.headers.authorization;
     const token = authHeader.split(' ')[1];
     await checkProfile(token, res);
+});
 
-    res.status(200).send({
+app.get("/api/external", checkJwt, async (req, res) => {
+    res.status(200).json({
         msg: "Your access token was successfully validated!"
     });
 });
@@ -104,10 +109,10 @@ app.get("/sightings", async (_, res) => {
     try {
         const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings;');
 
-        res.status(200).send(result.recordset);
+        res.status(200).json({ result: result.recordset });
 
     } catch (err) {
-        res.status(500).send({ msg: 'Database Error : ' + err.message });
+        res.status(500).json({ msg: 'Database Error : ' + err.message });
     }
 });
 
@@ -131,10 +136,10 @@ app.post("/sightingsbyid", async (req, res) => {
     
         //get sightings made by userID
         const result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE userId=${user_id};`);
-        res.status(200).send(result.recordset);
+        res.status(200).json({ result: result.recordset });
     }
     catch (err) {
-        res.status(500).send({ msg: 'Database Error : ' + err.message });
+        res.status(500).json({ msg: 'Database Error : ' + err.message });
     }
 
 });
@@ -153,10 +158,10 @@ app.post('/upload', checkJwt, upload.single('image'), async (req, res) => {
     try {
         const UploadResult = await db.query(`INSERT INTO spideyDb.dbo.Sightings (userId, location, image, description, timestamp) VALUES (${user.userId},'${location}','${imageUrl}','${description}','${sightingTime}');`);
         
-        res.status(201).send({ msg: 'Sighting uploaded successfully' });
+        res.status(201).json({ msg: 'Sighting uploaded successfully' });
 
     } catch (err) {
-        res.status(500).send({ msg: 'Database Error : ' + err.message });
+        res.status(500).json({ msg: 'Database Error : ' + err.message });
     }
 });
 
@@ -167,7 +172,7 @@ app.get("/", (_, res) => {
 
 app.use((err, req, res, next) => {
     if (err.name === "UnauthorizedError") {
-        return res.status(401).send({ msg: "Invalid token" });
+        return res.status(401).json({ msg: "Invalid token" });
     }
 
     next(err, req, res);
