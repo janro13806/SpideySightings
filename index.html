@@ -78,6 +78,21 @@
 
     <button onclick="ViewMySightingClicked()">View my sightings - userId1 hardcoded</button>
     <button onclick="ViewMainFeedClicked()">View main feed</button>
+
+    <form id="dateForm">
+      <label for="dateStart">Start Date:</label>
+      <input type="date" id="start" name="dateStart" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+      
+      <label for="dateEnd">End Date:</label>
+      <input type="date" id="end" name="dateEnd" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+
+      <label for="userSightingsOnly">Display only your posts:</label>
+      <input type="checkbox" id="userPostsOnly" name="userSightingsOnly">
+      
+      <input type="submit" value="Submit">
+    </form>
+
+    
   </main>
 
   <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
