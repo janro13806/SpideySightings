@@ -11,6 +11,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
@@ -131,6 +132,45 @@ app.post("/sightingsbyid", async (req, res) => {
     
         //get sightings made by userID
         const result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE userId=${user_id};`);
+        res.status(200).send(result.recordset);
+    }
+    catch (err) {
+        res.status(500).send({ msg: 'Database Error : ' + err.message });
+    }
+
+});
+
+app.post("/sightingsbydate", async (req, res) => {
+
+    const dateStart = new Date(req.body.dateStart);
+    const dateEnd = new Date(req.body.dateEnd);
+    const userSightingsOnly = req.body.userSightingsOnly;
+
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+
+    const userInfo = await fetch(process.env.USER_INFO, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    const user = await userInfo.json();
+    
+    try {
+        //get userID
+        const result_id = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
+        //const user_id = result_id.recordset[0].userId;
+        user_id = 1;
+
+        let result = null;
+
+        if(userSightingsOnly === "on"){
+            result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE (timestamp BETWEEN '${dateStart.toISOString()}' AND '${dateEnd.toISOString()}') AND userId=${user_id};`);
+        }
+        else{
+            result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE timestamp BETWEEN '${dateStart.toISOString()}' AND '${dateEnd.toISOString()}';`);
+        }
+        
         res.status(200).send(result.recordset);
     }
     catch (err) {
