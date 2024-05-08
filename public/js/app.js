@@ -38,22 +38,21 @@ window.onload = async () => {
     }
 };
 
-
-const sightingsbyid = async () => {
+const sightingsbydate = async (jsonData) => {
     // Delete the main feed card holder (if it exists)
     try {
-        let mainFeed = document.getElementById('main-feed');
+        let mainFeed = document.getElementById('main-sightings-feed');
         mainFeed.remove();
     } catch (error) {
         console.log('Could not delete main feed.')
     }
 
 
-    let sightings = await getSightingsById();
+    let sightings = await getSightingsByDate(jsonData);
     
     let cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");
-    cardHolder.id = 'my-sightings-feed';
+    cardHolder.id = 'main-sightings-feed';
 
     if (sightings != null) {
         for (i = 0; i < sightings.length; i++) {
@@ -64,9 +63,84 @@ const sightingsbyid = async () => {
             //id of the user, will need to use another api call to get user info
             let userId = sightings[i]['userId'];
 
-            if (userId != user_id) {
-                continue;
-            }
+            //information show for each post
+            let location = sightings[i]['location'];
+            let imageURL = sightings[i]['image'];
+            let description = sightings[i]['description'];
+
+            let timestamp = sightings[i]['timestamp'];
+            let dateTime = new Date(timestamp);
+            let date = dateTime.toDateString();
+            let hours = dateTime.getHours();
+            let minutes = dateTime.getMinutes();
+            let time = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+
+            //create card
+            let card = document.createElement('section');
+            card.classList.add("card-feed");
+            //create image
+            let cardImage = document.createElement('img');
+            cardImage.classList.add("card-image");
+            cardImage.src = imageURL;
+            card.appendChild(cardImage);
+
+            let cardContent = document.createElement('section');
+            cardContent.classList.add('card__content');
+
+            let cardTitle = document.createElement('p');
+            cardTitle.classList.add('card__title');
+            cardTitle.innerText = 'Spidey sighted in ' + location + '!';
+
+            let cardTitleDate = document.createElement('p');
+            cardTitleDate.innerText = date;
+            cardTitle.appendChild(cardTitleDate);
+
+            cardContent.appendChild(cardTitle);
+
+            let cardDesc = document.createElement('p');
+            cardDesc.classList.add('card__description');
+            cardDesc.innerText = 'Spider-man was sighted on ' + date + ' at ' + time;
+
+            let cardDescInner = document.createElement('p');
+            cardDescInner.innerText = description;
+            cardDesc.appendChild(cardDescInner);
+
+            cardContent.appendChild(cardDesc);
+
+            card.appendChild(cardContent);
+
+            cardHolder.appendChild(card);
+        }
+
+        let body = document.body;
+        body.appendChild(cardHolder);
+    }
+};
+
+const sightingsbyid = async () => {
+    // Delete the main feed card holder (if it exists)
+    try {
+        let mainFeed = document.getElementById('main-sightings-feed');
+        mainFeed.remove();
+    } catch (error) {
+        console.log('Could not delete main feed.')
+    }
+
+
+    let sightings = await getSightingsById();
+    
+    let cardHolder = document.createElement('section');
+    cardHolder.classList.add("cardHolder");
+    cardHolder.id = 'main-sightings-feed';
+
+    if (sightings != null) {
+        for (i = 0; i < sightings.length; i++) {
+
+            //id of the post
+            let sightingId = sightings[i]['sightingId'];
+
+            //id of the user, will need to use another api call to get user info
+            let userId = sightings[i]['userId'];
 
             //information show for each post
             let location = sightings[i]['location'];
@@ -94,6 +168,7 @@ const sightingsbyid = async () => {
 
             let cardTitle = document.createElement('p');
             cardTitle.classList.add('card-title');
+
             cardTitle.innerText = 'Spidey sighted in ' + location + '!';
 
             let cardTitleDate = document.createElement('p');
@@ -104,6 +179,7 @@ const sightingsbyid = async () => {
 
             let cardDesc = document.createElement('p');
             cardDesc.classList.add('card-description');
+
             cardDesc.innerText = 'Spider-man was sighted on ' + date + ' at ' + time;
 
             let cardDescInner = document.createElement('p');
@@ -122,19 +198,23 @@ const sightingsbyid = async () => {
     }
 };
 
+document.getElementById("profile").addEventListener("click", () => {
+    document.getElementById('profile-card').classList.toggle('hidden');
+});
+
 const sightings = async () => {
     // Delete the my sightings feed card holder (if it exists)
     try {
-        let mainFeed = document.getElementById('my-sightings-feed');
+        let mainFeed = document.getElementById('main-sightings-feed');
         mainFeed.remove();
     } catch (error) {
-        console.log('Could not delete my sightings feed.')
+        //console.log('Could not delete my sightings feed.')
     }
     let sightings = await getSightings();
 
     let cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");
-    cardHolder.id = 'main-feed';
+    cardHolder.id = 'main-sightings-feed';
 
     if (sightings != null) {
         for (i = 0; i < sightings.length; i++) {
@@ -185,6 +265,8 @@ const sightings = async () => {
 
             let cardTitle = document.createElement('p');
             cardTitle.classList.add('card-title');
+
+
             cardTitle.innerText = 'Spidey sighted in ' + location + '!';
 
             let cardTitleDate = document.createElement('p');
@@ -194,7 +276,9 @@ const sightings = async () => {
             cardContent.appendChild(cardTitle);
 
             let cardDesc = document.createElement('p');
+
             cardDesc.classList.add('card-description');
+
             cardDesc.innerText = 'Spider-man was sighted on ' + date + ' at ' + time;
 
             let cardDescInner = document.createElement('p');
@@ -202,6 +286,7 @@ const sightings = async () => {
             cardDesc.appendChild(cardDescInner);
 
             cardContent.appendChild(cardDesc);
+
 
             card.appendChild(cardContent);
 
@@ -243,26 +328,76 @@ async function getSightings() {
 }
 
 async function getSightingsById() {
-    try {
-        const response = await fetch('http://localhost:8080/sightingsbyid');
+        const token = await auth0Client.getTokenSilently();
+
+        try{
+            const response = await fetch('/sightingsbyid', {
+                method: 'POST',
+                body: JSON.stringify({}),
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error(response.text());
+            }
+            return await response.json();
+        }
+        catch(err){
+            console.error(err);
+            return null;
+        }
+}
+
+async function getSightingsByDate(jsonData){
+    const token = await auth0Client.getTokenSilently();
+
+    try{
+        const response = await fetch('/sightingsbydate', {
+            method: 'POST',
+            body: JSON.stringify(jsonData),
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
         if (!response.ok) {
             console.log(response.text());
             throw new Error('Woopsie, API broke');
         }
         return await response.json();
-    } catch (error) {
-        console.error(error);
+    }
+    catch(err){
+        console.error(err);
         return null;
     }
 }
+
+document.getElementById("dateForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    var formData = new FormData(event.target);
+
+    var jsonData = {};
+    formData.forEach(function(value, key){
+        jsonData[key] = value;
+    });
+
+    if (!jsonData.hasOwnProperty("userSightingsOnly")){
+        jsonData["userSightingsOnly"] = "off";
+    }
+
+    await sightingsbydate(jsonData);
+
+});
 
 const displayProfile = async () => {
     const userData = JSON.stringify(await auth0Client.getUser());
     if (userData.length > 0) {
         document.getElementById("profile-card").classList.toggle("hidden");
         document.getElementById("cardAvatar").src = JSON.parse(userData).picture;
-        document.getElementById("name").innerHTML = JSON.parse(userData).name;
-        document.getElementById("email").innerHTML = JSON.parse(userData).email;
+        document.getElementById("name").innerText = JSON.parse(userData).name;
+        document.getElementById("email").innerText = JSON.parse(userData).email;
     }
 };
 
@@ -271,6 +406,7 @@ const updateUI = async () => {
     document.getElementById("btn-call-api").disabled = !isAuthenticated;
 
     if (isAuthenticated) {
+        await checkProfile();
         document.getElementById("gated-content").classList.toggle("hidden");
 
         //document.getElementById("profile-card").style.display = "block";
@@ -286,6 +422,26 @@ const updateUI = async () => {
         document.getElementById("btn-nav-login").removeEventListener("click", logout);
         document.getElementById("btn-nav-login").addEventListener("click", login);
         document.getElementById("btn-nav-login").textContent = 'Login';
+    }
+};
+
+const checkProfile = async () => {
+    //Send request to check user profile
+    try{
+        const token = await auth0Client.getTokenSilently();
+        const response = await fetch('/profile', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        console.log(response);
+        if (!response.ok) {
+            throw new Error(response.text());
+        }
+    }
+    catch(err){
+        console.error(err);
     }
 };
 
