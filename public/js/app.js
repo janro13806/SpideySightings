@@ -146,6 +146,20 @@ const sightings = async () => {
             let hours = dateTime.getHours();
             let minutes = dateTime.getMinutes();
             let time = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+            
+            //create header
+            let header = document.createElement('section');
+            header.innerHTML = 'Spidey sighted in ' + location;
+            let header_time = document.createElement('span');
+            header_time.innerHTML = date;
+            header_time.classList.add('card-heading-time');
+            let header_delete_button = document.createElement('button');
+            header_delete_button.innerHTML = 'Delete sighting';
+            header_delete_button.onclick = deleteClicked;
+            header.appendChild(header_time);
+            header.appendChild(header_delete_button);
+            cardHolder.appendChild(header);
+            header.classList.add('card-heading');
 
             //create card
             let card = document.createElement('section');
@@ -190,6 +204,10 @@ async function ViewMainFeedClicked()
     await sightings();
 }
 
+function deleteClicked()
+{
+    alert('Clicked delete button');
+}
 
 async function getSightings() {
     try {

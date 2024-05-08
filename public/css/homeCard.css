@@ -76,12 +76,7 @@
 }
 
 .card-heading {
-  /* display: flex;
-  flex-direction: column;
-  /*center align items on the cross axis*/
-  /* align-items: center;  */
   font-family: 'Spiderman';
-  /* margin: 0; */
   font-size: 2em;
   font-weight: 700;
   background-color: #447BBE;
