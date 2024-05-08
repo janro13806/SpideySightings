@@ -149,12 +149,12 @@ const sightings = async () => {
             
             //create header
             let header = document.createElement('section');
-            header.innerHTML = 'Spidey sighted in ' + location;
+            header.innerText = 'Spidey sighted in ' + location;
             let header_time = document.createElement('span');
-            header_time.innerHTML = date;
+            header_time.innerText = date;
             header_time.classList.add('card-heading-time');
             let header_delete_button = document.createElement('button');
-            header_delete_button.innerHTML = 'Delete sighting';
+            header_delete_button.innerText = 'Delete sighting';
             header_delete_button.onclick = deleteClicked;
             header.appendChild(header_time);
             header.appendChild(header_delete_button);
