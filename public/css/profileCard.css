@@ -12,8 +12,14 @@
 } */
 
 .card {
-  width: var(--card-width);
-  height: var(--card-height);
+  /*width: var(--card-width);
+  height: var(--card-height);*/
+  max-width: 1000px;
+  max-height: calc(1000px * 9 / 16);
+  width: 90vw;
+  /*height: calc(90vw * 9 /16);*/
+  height: fit-content;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,6 +105,7 @@
   background: var(--secondary-alt);
   transition: 0.3s;
   margin: 0;
+  width: 20em;
 }
 
 .button:hover {
@@ -145,3 +152,71 @@
 .card:hover .image {
   transform: scale(2) translate(0%, -40%);
 }
+
+/*Search Function stuff*/
+
+.checkbox-con {
+  margin: 10px;
+  display: inline-block;
+  align-items: center;
+  color: white;
+}
+
+.checkbox-con input[type="checkbox"] {
+  appearance: none;
+  width: 48px;
+  height: 27px;
+  border: 2px solid #ff0000;
+  border-radius: 20px;
+  background: #f1e1e1;
+  position: relative;
+  box-sizing: border-box;
+}
+   
+.checkbox-con input[type="checkbox"]::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  background: rgba(234, 7, 7, 0.5);
+  border: 2px solid #ea0707;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(13%, 15%);
+  transition: all 0.3s ease-in-out;
+}
+  
+.checkbox-con input[type="checkbox"]:checked {
+  border: 2px solid #02c202;
+  background: #e2f1e1;
+}
+  
+.checkbox-con input[type="checkbox"]:checked::before {
+  background: rgba(2, 194, 2, 0.5);
+  border: 2px solid #02c202;
+  transform: translate(133%, 13%);
+  transition: all 0.3s ease-in-out;
+}
+   
+.checkbox-con input[type="checkbox"]:checked::after {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+   
+.checkbox-con label {
+  margin-left: 10px;
+  cursor: pointer;
+  user-select: none;
+  }
+
+#dateForm {
+  display: none;
+  transition: all 0.3s ease-in-out;
+}
+
+#dateForm.show {
+  display: block;
+}
+

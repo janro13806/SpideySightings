@@ -442,6 +442,7 @@ const displayProfile = async () => {
         document.getElementById("name").innerText = JSON.parse(user).name;
         document.getElementById("email").innerText = JSON.parse(user).email;
     }
+    
 };
 
 const updateUI = async () => {
@@ -524,7 +525,9 @@ const callApi = async () => {
 };
 
 document.getElementById("postSightingBtn").addEventListener("click", (event) => {
-    const SightForm = document.getElementById("SightingForm");
+    const SightForm = document.getElementById("gated-content");
+
+
     SightForm.classList.toggle('hidden');
 });
 
@@ -561,3 +564,8 @@ input.onchange = () => {
         fileNameDisplay.textContent = "No file selected";
     }
 };
+
+document.getElementById('toggleSearch').addEventListener('click', function() {
+    var form = document.getElementById('dateForm');
+    form.classList.toggle('show');
+  });
