@@ -120,7 +120,7 @@ const sightingsbydate = async (jsonData) => {
 const sightingsbyid = async () => {
     // Delete the main feed card holder (if it exists)
     try {
-        const mainFeed = document.getElementById('my-sightings-feed');
+        const mainFeed = document.getElementById('main-sightings-feed');
         mainFeed.remove();
     } catch (error) {
         console.log('Could not delete main feed.')
