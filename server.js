@@ -235,9 +235,6 @@ app.post('/upload', checkJwt, upload.single('image'), async (req, res) => {
 });
 
 // _______________________________ALL ENDPOINTS GO ABOVE THIS LINE______________________________________________________________________________________
-app.get("/", (_, res) => {
-    res.sendFile(join(__dirname, "index.html"));
-});
 
 app.use((err, req, res, next) => {
     if (err.name === "UnauthorizedError") {
