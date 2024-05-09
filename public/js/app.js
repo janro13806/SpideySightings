@@ -525,14 +525,10 @@ const callApi = async () => {
 };
 
 document.getElementById("postSightingBtn").addEventListener("click", (event) => {
-    const SightForm = document.getElementById("SightingForm");
+    const SightForm = document.getElementById("gated-content");
 
-    if (SightForm.style.display === "none" || SightForm.style.display === "") {
-        SightForm.style.display = "block";
-    } else {
-        SightForm.style.display = "none";
-    }
-    //SightForm.classList.toggle('hidden');
+
+    SightForm.classList.toggle('hidden');
 });
 
 document.getElementById('SightingForm').addEventListener('submit', async (event) => {

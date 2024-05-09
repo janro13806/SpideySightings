@@ -12,8 +12,14 @@
 } */
 
 .card {
-  width: var(--card-width);
-  height: var(--card-height);
+  /*width: var(--card-width);
+  height: var(--card-height);*/
+  max-width: 1000px;
+  max-height: calc(1000px * 9 / 16);
+  width: 90vw;
+  /*height: calc(90vw * 9 /16);*/
+  height: fit-content;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -144,7 +150,7 @@
 }
 
 .card:hover .image {
-  transform: scale(2) translate(-250%, 10%);
+  transform: scale(2) translate(0%, -40%);
 }
 
 /*Search Function stuff*/
