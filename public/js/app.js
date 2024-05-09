@@ -245,7 +245,9 @@ const sightings = async () => {
             header_time.classList.add('card-heading-time');
             let header_delete_button = document.createElement('button');
             header_delete_button.innerText = 'Delete sighting';
-            header_delete_button.onclick = deleteClicked;
+            header_delete_button.onclick = async () => {
+                await deleteClicked(sightingId);
+            }
             header.appendChild(header_time);
             header.appendChild(header_delete_button);
             cardHolder.appendChild(header);
@@ -308,9 +310,35 @@ async function ViewMainFeedClicked()
     await sightings();
 }
 
-function deleteClicked()
+async function deleteClicked(postID)
 {
-    alert('Clicked delete button');
+    const token = await auth0Client.getTokenSilently();
+
+    jsonData = {"postID" : postID};
+
+    try{
+        const response = await fetch('/deletepostbyid', {
+            method: 'POST',
+            body: JSON.stringify(jsonData),
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            console.log(response.text());
+            throw new Error('Woopsie, API broke');
+        }
+        let countJson = await response.json();
+        if(countJson.rowsAffected == 0){
+            console.log("No post deleted");
+        }
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+
 }
 
 async function getSightings() {
