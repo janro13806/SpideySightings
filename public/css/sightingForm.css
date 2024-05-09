@@ -59,7 +59,7 @@
     background-repeat: no-repeat;
     z-index: 1;
     transition: all .2s ease;
-    margin-bottom: 1.5em;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
