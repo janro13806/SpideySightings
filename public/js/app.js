@@ -166,18 +166,38 @@ const sightingsbyid = async () => {
             let cardContent = document.createElement('section');
             cardContent.classList.add('card-content');
 
+            let cardHeader = document.createElement('section');
+            cardHeader.classList.add('card-header');
+
+            let cardHeaderTime = document.createElement('p');
+            cardHeaderTime.innerText = date;
+            cardHeaderTime.classList.add('card-time');
+
             let cardTitle = document.createElement('p');
             cardTitle.classList.add('card-title');
 
+            let header_delete_button = document.createElement('button');
+            header_delete_button.classList.add('card-delete-button');
+            header_delete_button.classList.add('delete-hidden');
+            header_delete_button.innerText = ' Delete ';
+            header_delete_button.onclick = deleteClicked;
+
+            card.addEventListener('mouseleave', () => {
+                header_delete_button.classList.add('delete-hidden');
+            });
+            card.addEventListener('mouseenter', () => {
+                header_delete_button.classList.remove('delete-hidden');
+            });
+
             cardTitle.innerText = 'Spidey sighted in ' + location + '!';
 
-            let cardTitleDate = document.createElement('p');
-            cardTitleDate.innerText = date;
-            cardTitle.appendChild(cardTitleDate);
-
-            cardContent.appendChild(cardTitle);
+            cardHeader.appendChild(cardHeaderTime);
+            cardHeader.appendChild(cardTitle);
+            cardHeader.appendChild(header_delete_button);
+            cardContent.appendChild(cardHeader);
 
             let cardDesc = document.createElement('p');
+
             cardDesc.classList.add('card-description');
 
             cardDesc.innerText = 'Spider-man was sighted on ' + date + ' at ' + time;
@@ -187,6 +207,7 @@ const sightingsbyid = async () => {
             cardDesc.appendChild(cardDescInner);
 
             cardContent.appendChild(cardDesc);
+
 
             card.appendChild(cardContent);
 
@@ -236,20 +257,6 @@ const sightings = async () => {
             let hours = dateTime.getHours();
             let minutes = dateTime.getMinutes();
             let time = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
-            
-            //create header
-            let header = document.createElement('section');
-            header.innerText = 'Spidey sighted in ' + location;
-            let header_time = document.createElement('span');
-            header_time.innerText = date;
-            header_time.classList.add('card-heading-time');
-            let header_delete_button = document.createElement('button');
-            header_delete_button.innerText = 'Delete sighting';
-            header_delete_button.onclick = deleteClicked;
-            header.appendChild(header_time);
-            header.appendChild(header_delete_button);
-            cardHolder.appendChild(header);
-            header.classList.add('card-heading');
 
             //create card
             let card = document.createElement('section');
@@ -263,17 +270,26 @@ const sightings = async () => {
             let cardContent = document.createElement('section');
             cardContent.classList.add('card-content');
 
+            let cardHeader = document.createElement('section');
+            cardHeader.classList.add('card-header');
+
+            let cardHeaderTime = document.createElement('p');
+            cardHeaderTime.innerText = date;
+            cardHeaderTime.classList.add('card-time');
+
+            let headerPlaceholder = document.createElement('aside');
+            headerPlaceholder.classList.add('card-delete-button');
+            headerPlaceholder.classList.add('delete-hidden');
+
             let cardTitle = document.createElement('p');
             cardTitle.classList.add('card-title');
 
-
             cardTitle.innerText = 'Spidey sighted in ' + location + '!';
 
-            let cardTitleDate = document.createElement('p');
-            cardTitleDate.innerText = date;
-            cardTitle.appendChild(cardTitleDate);
-
-            cardContent.appendChild(cardTitle);
+            cardHeader.appendChild(cardHeaderTime);
+            cardHeader.appendChild(cardTitle);
+            cardHeader.appendChild(headerPlaceholder);
+            cardContent.appendChild(cardHeader);
 
             let cardDesc = document.createElement('p');
 
