@@ -38,18 +38,18 @@
 
   <div id="loader"></div>
 
-  <article class="card hidden" id="profile-card">
-    <figure class="image">
-      <img id="cardAvatar" src="" alt="">
-    </figure>
-    <section class="card-info">
-      <span id="name"></span>
-      <p id="email"></p>
-    </section>
-    <button href="#" id="postSightingBtn" class="button">Post Sighting</button>
-  </article>
-
   <main class="hidden" id="gated-content">
+
+    <article class="card" id="profile-card">
+      <figure class="image">
+        <img id="cardAvatar" src="" alt="">
+      </figure>
+      <section class="card-info">
+        <span id="name"></span>
+        <p id="email"></p>
+      </section>
+      <button href="#" id="postSightingBtn" class="button">Post Sighting</button>
+    </article>
 
     <button id="btn-call-api" disabled="true" type="button" onclick="callApi()">Call Api</button>
     <pre id="api-call-result"></pre>

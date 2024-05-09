@@ -42,8 +42,6 @@ body {
   background-image: linear-gradient(0deg, transparent 24%, var(--on-background) 25%, var(--on-background) 26%, transparent 27%, transparent 74%, var(--on-background) 75%, var(--on-background) 76%, transparent 77%, transparent),
     linear-gradient(90deg, transparent 24%, var(--on-background) 25%, var(--on-background) 26%, transparent 27%, transparent 74%, var(--on-background) 75%, var(--on-background) 76%, transparent 77%, transparent);
   background-size: 55px 55px;
-  margin-left: 10%;
-  margin-right: 10%;
 }
 
 h1 {
@@ -70,7 +68,11 @@ label {
 }
 
 main {
-  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
 }
 
 pre {
