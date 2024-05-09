@@ -108,7 +108,7 @@ app.get("/auth_config.json", (_, res) => {
 
 app.get("/sightings", async (_, res) => {
     try {
-        const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings;');
+        const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings ORDER BY sightingId DESC;');
 
         res.status(200).send(result.recordset);
 
@@ -135,7 +135,7 @@ app.post("/sightingsbyid", async (req, res) => {
         const user_id = result_id.recordset[0].userId;
         
         //get sightings made by userID
-        const result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE userId=${user_id};`);
+        const result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE userId=${user_id} ORDER BY sightingId DESC;`);
         res.status(200).send(result.recordset);
     }
     catch (err) {
@@ -168,10 +168,10 @@ app.post("/sightingsbydate", async (req, res) => {
         let result = null;
 
         if(userSightingsOnly === "on"){
-            result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE (timestamp BETWEEN '${dateStart.toISOString()}' AND '${dateEnd.toISOString()}') AND userId=${user_id};`);
+            result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE (timestamp BETWEEN '${dateStart.toISOString()}' AND '${dateEnd.toISOString()}') AND userId=${user_id} ORDER BY sightingId DESC;`);
         }
         else{
-            result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE timestamp BETWEEN '${dateStart.toISOString()}' AND '${dateEnd.toISOString()}';`);
+            result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE timestamp BETWEEN '${dateStart.toISOString()}' AND '${dateEnd.toISOString()}' ORDER BY sightingId DESC;`);
         }
         
         res.status(200).send(result.recordset);
