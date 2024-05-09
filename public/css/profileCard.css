@@ -14,11 +14,12 @@
   align-items: center;
   text-align: center;
   gap: 0.5em;
+  border: 0.125em solid #000;
   background-color: var(--background);
   border-radius: 0.35em;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, .3);
+  box-shadow: 0.4rem 0.4rem rgba(0, 0, 0, 1);
   transition: all 0.4s ease;
   font-family: 'Spiderman';
   font-size: 16pt;
@@ -27,7 +28,7 @@
 }
 
 .search-adjust {
-  height: 30em;
+  height: 31em;
 }
 
 .card::before {
