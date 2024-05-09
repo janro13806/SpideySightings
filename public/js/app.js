@@ -348,6 +348,7 @@ async function deleteClicked(postID)
         if(countJson.rowsAffected == 0){
             console.log("No post deleted");
         }
+        await sightingsbyid();
     }
     catch(err){
         console.error(err);
@@ -526,8 +527,6 @@ const callApi = async () => {
 
 document.getElementById("postSightingBtn").addEventListener("click", (event) => {
     const SightForm = document.getElementById("gated-content");
-
-
     SightForm.classList.toggle('hidden');
 });
 
@@ -544,7 +543,8 @@ document.getElementById('SightingForm').addEventListener('submit', async (event)
             Authorization: `Bearer ${token}`
         }
     }).then(response => response.json())
-    .then(data => {
+    .then(async (data) => {
+        await sightingsbyid()
         console.log('Success : ', data);
     })
     .catch((error) => {
