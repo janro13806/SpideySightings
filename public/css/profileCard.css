@@ -42,7 +42,7 @@
   content: "";
   width: var(--card-width);
   height: 6rem;
-  position: absolute;
+  position: relative;
   top: 0;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
@@ -180,7 +180,7 @@
   background: rgba(234, 7, 7, 0.5);
   border: 2px solid #ea0707;
   border-radius: 50%;
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   transform: translate(13%, 15%);
@@ -200,7 +200,7 @@
 }
    
 .checkbox-con input[type="checkbox"]:checked::after {
-  position: absolute;
+  position: fixed;
   top: 5px;
   left: 5px;
 }
