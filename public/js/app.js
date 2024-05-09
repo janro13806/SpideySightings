@@ -134,6 +134,8 @@ const sightingsbydate = async (jsonData) => {
 };
 
 const sightingsbyid = async () => {
+    document.getElementById("loader").classList.toggle("hidden");
+
     // Delete the main feed card holder (if it exists)
     try {
         const mainFeed = document.getElementById('main-sightings-feed');
@@ -141,7 +143,14 @@ const sightingsbyid = async () => {
     } catch (error) {
         console.log('Could not delete main feed.')
     }
+    try {
+        let emptyFeed = document.getElementById('empty-message');
+        mainFeed.remove();
+    } catch (error) {
+        //console.log('Could not delete my sightings feed.')
+    }
     const sightings = await getSightingsById();
+    document.getElementById("loader").classList.toggle("hidden");
 
     const cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");
@@ -247,12 +256,17 @@ const sightings = async () => {
     } catch (error) {
         //console.log('Could not delete my sightings feed.')
     }
+    try {
+        let emptyFeed = document.getElementById('empty-message');
+        mainFeed.remove();
+    } catch (error) {
+        //console.log('Could not delete my sightings feed.')
+    }
     let sightings = await getSightings();
 
     let cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");
     cardHolder.id = 'main-sightings-feed';
-
     if (sightings != null) {
         for (i = 0; i < sightings.length; i++) {
 
@@ -324,7 +338,12 @@ const sightings = async () => {
 
             cardHolder.appendChild(card);
         }
-
+        if (sightings.length == 0){
+            let emptyMessage = document.createElement('h1');
+            emptyMessage.id = 'empty-message';
+            emptyMessage.innerText = 'No sightings of spiderman ...yet';
+            cardHolder.appendChild(emptyMessage);
+        }
         let body = document.body;
         body.appendChild(cardHolder);
     }
@@ -343,6 +362,8 @@ async function ViewMainFeedClicked()
 
 async function deleteClicked(postID)
 {
+    document.getElementById("loader").classList.toggle("hidden");
+
     const token = await auth0Client.getTokenSilently();
 
     jsonData = {"postID" : postID};
@@ -365,6 +386,7 @@ async function deleteClicked(postID)
             console.log("No post deleted");
         }
         await sightingsbyid();
+        document.getElementById("loader").classList.toggle("hidden");
     }
     catch(err){
         console.error(err);
@@ -544,9 +566,13 @@ const callApi = async () => {
 document.getElementById("postSightingBtn").addEventListener("click", (event) => {
     const SightForm = document.getElementById("gated-content");
     SightForm.classList.toggle('hidden');
+    const temp = document.getElementById("SightingForm");
+    temp.classList.toggle('hidden');
 });
 
 document.getElementById('SightingForm').addEventListener('submit', async (event) => {
+    document.getElementById("loader").classList.toggle("hidden");
+
     event.preventDefault();
 
     const formData = new FormData(event.target);
@@ -562,6 +588,7 @@ document.getElementById('SightingForm').addEventListener('submit', async (event)
     .then(async (data) => {
         await sightingsbyid()
         console.log('Success : ', data);
+        document.getElementById("loader").classList.toggle("hidden");
     })
     .catch((error) => {
         console.error('Error : ', error);

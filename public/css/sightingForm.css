@@ -1,8 +1,8 @@
 .custom-file-upload {
     display: block;
     flex-wrap: wrap;
+    width: clamp(5rem, 50% + 0.625rem, 6.25rem);
     height: auto;
-    width: auto;
     gap: 0.5em;
     cursor: pointer;
     justify-content: center;
@@ -10,7 +10,6 @@
     background-color: rgba(255, 255, 255, 1);
     padding: 0.7em;
     border-radius: 1.5em;
-    padding: 0.2em 0.2em 0.2em 1.2em;
 }
 
 .custom-file-upload:hover {
@@ -25,7 +24,7 @@
   
 .custom-file-upload .UploadIcon svg {
     height: auto;
-    width: (1.1em, 0.7153rem + 1.6368vw, 3em);
+    width: clamp(5rem, 50% + 0.625rem, 6.25rem);
     fill: rgba(75, 85, 99, 1);
 }
 
@@ -37,7 +36,7 @@
 
 .custom-file-upload .text span {
     font-weight: 400;
-    font-size: calc(1.6em+ 1vmin);
+    font-size: calc(1.0em+ 1vmin);
     font-family: 'Spiderman';
     color: rgba(75, 85, 99, 1);
 }
@@ -45,10 +44,6 @@
 .custom-file-upload input {
     display: none;
 }
-
-/* main {
-    width: clamp(10em, 90vw, 60em);
-} */
 
 /* FORM Below */
 #SightingForm {
@@ -114,7 +109,8 @@
 }
 
 .input {
-    width: 80vw;
+    width: 60vw; 
+    max-width: 50rem;  
     border-radius: 0.2em;
     border: 0.05em solid var(--text);
     background-color: var(--primary-alt);
@@ -158,6 +154,7 @@ input[type="datetime-local"] {
 
 #InputContainer {
     margin-bottom: 2em;
+    width: 100%;
 }
 
 .button-confirm {
@@ -167,7 +164,7 @@ input[type="datetime-local"] {
     height: 4.5em;
     border-radius: 0.7em;
     border: 0.125em solid var(--text);
-    background-color: var(--primary);
+    background-color: var(--primary-alt);
     box-shadow: 0.25rem 0.25rem var(--font-color);
     color: var(--content);
     cursor: pointer;
