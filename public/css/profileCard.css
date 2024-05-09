@@ -27,7 +27,7 @@
 }
 
 .search-adjust {
-  height: 29em;
+  height: 30em;
 }
 
 .card::before {
@@ -199,4 +199,8 @@
 
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
+}
+
+.display-posts{
+  margin: 0.5em;
 }
