@@ -46,10 +46,14 @@
     display: none;
 }
 
+/* main {
+    width: clamp(10em, 90vw, 60em);
+} */
+
 /* FORM Below */
 #SightingForm {
-    width: clamp(10em, 90%, 60em);
-    padding: 2em;
+    max-width: 1000px;
+    width: 90vw;
     background-image: url('../img/spiderman-night-scene-chromebook-wallpaper.jpg');
     background-size: cover;
     gap: 0.5em;
@@ -60,6 +64,7 @@
     background-repeat: no-repeat;
     z-index: 1;
     transition: all .2s ease;
+    margin-bottom: 1.5em;
 }
 
 #SightingForm::after {
