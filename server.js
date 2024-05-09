@@ -110,7 +110,7 @@ app.get("/sightings", async (_, res) => {
     try {
         const result = await db.query('SELECT * FROM spideyDb.dbo.Sightings;');
 
-        res.status(200).json({ result: result.recordset });
+        res.status(200).send(result.recordset);
 
     } catch (err) {
         res.status(500).json({ msg: 'Database Error : ' + err.message });
@@ -137,7 +137,7 @@ app.post("/sightingsbyid", async (req, res) => {
     
         //get sightings made by userID
         const result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE userId=${user_id};`);
-        res.status(200).json({ result: result.recordset });
+        res.status(200).send(result.recordset);
     }
     catch (err) {
         res.status(500).json({ msg: 'Database Error : ' + err.message });
