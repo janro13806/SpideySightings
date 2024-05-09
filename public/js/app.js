@@ -408,12 +408,12 @@ document.getElementById("dateForm").addEventListener("submit", async function(ev
 });
 
 const displayProfile = async () => {
-    const userData = JSON.stringify(await auth0Client.getUser());
-    if (userData.length > 0) {
-        document.getElementById("profile-card").classList.toggle("hidden");
-        document.getElementById("cardAvatar").src = JSON.parse(userData).picture;
-        document.getElementById("name").innerText = JSON.parse(userData).name;
-        document.getElementById("email").innerText = JSON.parse(userData).email;
+    const user = await auth0Client.getUser();
+    if (user.length > 0) {
+        document.getElementById("gated-content").classList.toggle("hidden");
+        document.getElementById("cardAvatar").src = JSON.parse(user).picture;
+        document.getElementById("name").innerText = JSON.parse(user).name;
+        document.getElementById("email").innerText = JSON.parse(user).email;
     }
 };
 
@@ -422,18 +422,14 @@ const updateUI = async () => {
     document.getElementById("btn-call-api").disabled = !isAuthenticated;
 
     if (isAuthenticated) {
+        document.getElementById("btn-nav-login").textContent = 'Logout';
         await checkProfile();
         document.getElementById("gated-content").classList.toggle("hidden");
 
-        //document.getElementById("profile-card").style.display = "block";
-        document.getElementById("SightingForm").style.display = "none";
-
         document.getElementById("btn-nav-login").removeEventListener("click", login);
         document.getElementById("btn-nav-login").addEventListener("click", logout);
-        document.getElementById("btn-nav-login").textContent = 'Logout';
     } else {
         document.getElementById("gated-content").classList.toggle("hidden");
-        //document.getElementById("profile-card").style.display = "none";
 
         document.getElementById("btn-nav-login").removeEventListener("click", logout);
         document.getElementById("btn-nav-login").addEventListener("click", login);
