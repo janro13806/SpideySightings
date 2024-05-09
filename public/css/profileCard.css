@@ -27,7 +27,7 @@
 }
 
 .search-adjust {
-  height: 29em;
+  height: 30em;
 }
 
 .card::before {
@@ -120,7 +120,6 @@
 /*Search Function stuff*/
 
 .checkbox-con {
-  margin: 10px;
   display: inline-block;
   align-items: center;
   color: white;
@@ -130,9 +129,9 @@
   appearance: none;
   width: 48px;
   height: 27px;
-  border: 2px solid #ff0000;
+  border: 2px solid black;
   border-radius: 20px;
-  background: #f1e1e1;
+  background: white;
   position: relative;
   box-sizing: border-box;
 }
@@ -141,8 +140,8 @@
   content: "";
   width: 14px;
   height: 14px;
-  background: rgba(234, 7, 7, 0.5);
-  border: 2px solid #ea0707;
+  background: var(--secondary-alt);
+  border: 2px solid black;
   border-radius: 50%;
   position: absolute;
   top: 0;
@@ -152,13 +151,13 @@
 }
   
 .checkbox-con input[type="checkbox"]:checked {
-  border: 2px solid #02c202;
-  background: #e2f1e1;
+  border: 2px solid black;
+  background: rgba(62, 191, 227, 0.3);
 }
   
 .checkbox-con input[type="checkbox"]:checked::before {
-  background: rgba(2, 194, 2, 0.5);
-  border: 2px solid #02c202;
+  background: var(--secondary-alt);
+  border: 2px solid black;
   transform: translate(133%, 13%);
   transition: all 0.4s ease-in-out;
 }
@@ -199,4 +198,8 @@
 
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
+}
+
+.display-posts{
+  margin: 0.5em;
 }
