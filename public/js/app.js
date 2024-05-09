@@ -220,7 +220,7 @@ const sightingsbyid = async () => {
 };
 
 document.getElementById("profile").addEventListener("click", () => {
-    document.getElementById('profile-card').classList.toggle('hidden');
+    document.getElementById('gated-content').classList.toggle('hidden');
 });
 
 const sightings = async () => {
@@ -523,12 +523,7 @@ const callApi = async () => {
 
 document.getElementById("postSightingBtn").addEventListener("click", (event) => {
     const SightForm = document.getElementById("SightingForm");
-
-    if (SightForm.style.display === "none" || SightForm.style.display === "") {
-        SightForm.style.display = "block";
-    } else {
-        SightForm.style.display = "none";
-    }
+    SightForm.classList.toggle('hidden');
 });
 
 document.getElementById('SightingForm').addEventListener('submit', async (event) => {
