@@ -164,10 +164,11 @@ const sightingsbyid = async () => {
             card.appendChild(cardImage);
 
             let cardContent = document.createElement('section');
-            cardContent.classList.add('card__content');
+            cardContent.classList.add('card-content');
 
             let cardTitle = document.createElement('p');
-            cardTitle.classList.add('card__title');
+            cardTitle.classList.add('card-title');
+
             cardTitle.innerText = 'Spidey sighted in ' + location + '!';
 
             let cardTitleDate = document.createElement('p');
@@ -177,7 +178,8 @@ const sightingsbyid = async () => {
             cardContent.appendChild(cardTitle);
 
             let cardDesc = document.createElement('p');
-            cardDesc.classList.add('card__description');
+            cardDesc.classList.add('card-description');
+
             cardDesc.innerText = 'Spider-man was sighted on ' + date + ' at ' + time;
 
             let cardDescInner = document.createElement('p');
@@ -234,6 +236,20 @@ const sightings = async () => {
             let hours = dateTime.getHours();
             let minutes = dateTime.getMinutes();
             let time = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+            
+            //create header
+            let header = document.createElement('section');
+            header.innerText = 'Spidey sighted in ' + location;
+            let header_time = document.createElement('span');
+            header_time.innerText = date;
+            header_time.classList.add('card-heading-time');
+            let header_delete_button = document.createElement('button');
+            header_delete_button.innerText = 'Delete sighting';
+            header_delete_button.onclick = deleteClicked;
+            header.appendChild(header_time);
+            header.appendChild(header_delete_button);
+            cardHolder.appendChild(header);
+            header.classList.add('card-heading');
 
             //create card
             let card = document.createElement('section');
@@ -245,10 +261,12 @@ const sightings = async () => {
             card.appendChild(cardImage);
 
             let cardContent = document.createElement('section');
-            cardContent.classList.add('card__content');
+            cardContent.classList.add('card-content');
 
             let cardTitle = document.createElement('p');
-            cardTitle.classList.add('card__title');
+            cardTitle.classList.add('card-title');
+
+
             cardTitle.innerText = 'Spidey sighted in ' + location + '!';
 
             let cardTitleDate = document.createElement('p');
@@ -258,7 +276,9 @@ const sightings = async () => {
             cardContent.appendChild(cardTitle);
 
             let cardDesc = document.createElement('p');
-            cardDesc.classList.add('card__description');
+
+            cardDesc.classList.add('card-description');
+
             cardDesc.innerText = 'Spider-man was sighted on ' + date + ' at ' + time;
 
             let cardDescInner = document.createElement('p');
@@ -288,6 +308,10 @@ async function ViewMainFeedClicked()
     await sightings();
 }
 
+function deleteClicked()
+{
+    alert('Clicked delete button');
+}
 
 async function getSightings() {
     try {
