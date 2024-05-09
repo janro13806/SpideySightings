@@ -436,7 +436,6 @@ document.getElementById("dateForm").addEventListener("submit", async function(ev
 
 const displayProfile = async () => {
     const user = JSON.stringify(await auth0Client.getUser());
-
     if (user.length > 0) {
         document.getElementById("gated-content").classList.toggle("hidden");
         document.getElementById("cardAvatar").src = JSON.parse(user).picture;
@@ -454,7 +453,9 @@ const updateUI = async () => {
         document.getElementById("btn-nav-login").textContent = 'Logout';
         await checkProfile();
         document.getElementById("gated-content").classList.toggle("hidden");
+
         await displayProfile();
+
         document.getElementById("btn-nav-login").removeEventListener("click", login);
         document.getElementById("btn-nav-login").addEventListener("click", logout);
     } else {
@@ -526,7 +527,10 @@ const callApi = async () => {
 document.getElementById("postSightingBtn").addEventListener("click", (event) => {
     const SightForm = document.getElementById("SightingForm");
 
+    console.log(SightForm)
+
     if (SightForm.style.display === "none" || SightForm.style.display === "") {
+        console.log("test");
         SightForm.style.display = "block";
     } else {
         SightForm.style.display = "none";

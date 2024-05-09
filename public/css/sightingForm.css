@@ -58,6 +58,7 @@
     position: relative;
     background-repeat: no-repeat;
     z-index: 1;
+    display: none;
 }
 
 #SightingForm::after {

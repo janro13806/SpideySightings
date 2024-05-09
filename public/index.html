@@ -52,14 +52,24 @@
     <button class="button" id="toggleSearch">Search</button>
 
     <form id="dateForm">
-      <label for="dateStart">Start Date:</label>
-      <input type="date" id="start" name="dateStart" value="2024-05-08" min="2018-01-01" max="2050-1-1">
 
-      <label for="dateEnd">End Date:</label>
-      <input type="date" id="end" name="dateEnd" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+      <p>
+        <label for="dateStart">Start Date:</label>
+        <input type="date" id="start" name="dateStart" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+      </p>
 
-      <label for="userSightingsOnly">Display only your posts:</label>
-      <input type="checkbox" id="userPostsOnly" name="userSightingsOnly">
+      <p>
+        <label for="dateEnd">End Date:</label>
+        <input type="date" id="end" name="dateEnd" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+      </p>
+
+      <p>
+        <label for="userSightingsOnly">Display only your posts:</label>
+
+        <span class="checkbox-con">
+          <input type="checkbox" id="userPostsOnly" name="userSightingsOnly">
+        </span>
+      </p>
 
       <input type="submit" class="button" value="Search">
     </form>

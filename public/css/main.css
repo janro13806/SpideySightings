@@ -58,7 +58,7 @@ figure {
 }
 
 .hidden {
-  display: none !important;
+  display: none;
 }
 
 .blur {
