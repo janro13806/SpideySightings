@@ -13,9 +13,6 @@ button {
 }
 
 /* Menu */
-.menu {
-    flex-wrap: nowrap;
-}
 
 .menu,
 .submenu {
@@ -25,6 +22,10 @@ button {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.menu {
+    flex-wrap: nowrap;
 }
 
 .menu>li {

@@ -38,18 +38,45 @@
 
   <div id="loader"></div>
 
-  <main class="hidden" id="gated-content">
+  <article class="card hidden" id="profile-card">
 
-    <article class="card" id="profile-card">
-      <figure class="image">
-        <img id="cardAvatar" src="" alt="">
-      </figure>
-      <section class="card-info">
-        <span id="name"></span>
-        <p id="email"></p>
-      </section>
-      <button href="#" id="postSightingBtn" class="button">Post Sighting</button>
-    </article>
+    <figure class="image">
+      <img id="cardAvatar" src="" alt="">
+    </figure>
+    <section class="card-info">
+      <span id="name"></span>
+      <p id="email"></p>
+    </section>
+    <button href="#" id="postSightingBtn" class="button">Post Sighting</button>
+
+    <button class="button" id="toggleSearch">Search</button>
+
+    <form id="dateForm">
+
+      <p>
+        <label for="dateStart">Start Date:</label>
+        <input type="date" id="start" name="dateStart" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+      </p>
+
+      <p>
+        <label for="dateEnd">End Date:</label>
+        <input type="date" id="end" name="dateEnd" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+      </p>
+
+      <p>
+        <label for="userSightingsOnly">Display only your posts:</label>
+
+        <span class="checkbox-con">
+          <input type="checkbox" id="userPostsOnly" name="userSightingsOnly">
+        </span>
+      </p>
+
+      <input type="submit" class="button" value="Apply">
+    </form>
+
+  </article>
+
+  <main class="hidden" id="gated-content">
 
     <button id="btn-call-api" disabled="true" type="button" onclick="callApi()">Call Api</button>
     <pre id="api-call-result"></pre>
@@ -87,20 +114,6 @@
 
     <button onclick="ViewMySightingClicked()">View my sightings - userId1 hardcoded</button>
     <button onclick="ViewMainFeedClicked()">View main feed</button>
-
-    <form id="dateForm">
-      <label for="dateStart">Start Date:</label>
-      <input type="date" id="start" name="dateStart" value="2024-05-08" min="2018-01-01" max="2050-1-1">
-      
-      <label for="dateEnd">End Date:</label>
-      <input type="date" id="end" name="dateEnd" value="2024-05-08" min="2018-01-01" max="2050-1-1">
-
-      <label for="userSightingsOnly">Display only your posts:</label>
-      <input type="checkbox" id="userPostsOnly" name="userSightingsOnly">
-      
-      <input type="submit" value="Submit">
-    </form>
-
     
   </main>
 
