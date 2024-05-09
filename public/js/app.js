@@ -36,6 +36,9 @@ window.onload = async () => {
 
         window.history.replaceState({}, document.title, "/");
     }
+
+    document.getElementById("start").max = new Date().toISOString();
+    document.getElementById("end").max = new Date().toISOString();
 };
 
 const sightingsbydate = async (jsonData) => {

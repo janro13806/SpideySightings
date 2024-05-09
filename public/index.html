@@ -22,12 +22,12 @@
   <nav class="navbar">
     <h1 id="header">Welcme t Spidey Sightings</h1>
     <ul class="menu cf">
-      <li class="nav-home"><button type="button" id="btn-nav-home">Home</button></li>
+      <li class="nav-home"><button onclick="ViewMainFeedClicked()" type="button" id="btn-nav-home">Home</button></li>
       <li>
         <button>Services</button>
         <ul class="submenu">
           <li><button id="profile" type="button">Profile</button></li>
-          <li><button type="button">My Sightings</button></li>
+          <li><button onclick="ViewMySightingClicked()" type="button">My Sightings</button></li>
           <li><button type="button">Search</button></li>
         </ul>
       </li>
@@ -55,12 +55,12 @@
 
       <p>
         <label for="dateStart">Start Date:</label>
-        <input type="date" id="start" name="dateStart" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+        <input type="datetime-local" id="start" name="dateStart">
       </p>
 
       <p>
         <label for="dateEnd">End Date:</label>
-        <input type="date" id="end" name="dateEnd" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+        <input type="datetime-local" id="end" name="dateEnd" >
       </p>
 
       <p>
@@ -111,9 +111,6 @@
 
       </section>
     </form>
-
-    <button onclick="ViewMySightingClicked()">View my sightings - userId1 hardcoded</button>
-    <button onclick="ViewMainFeedClicked()">View main feed</button>
     
   </main>
 
