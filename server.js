@@ -184,6 +184,35 @@ app.post("/sightingsbydate", async (req, res) => {
 
 });
 
+app.post("/deletepostbyid", async (req, res) => {
+
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+
+    const userInfo = await fetch(process.env.USER_INFO, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    const user = await userInfo.json();
+    
+    try {
+        //get userID
+        const result_id = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
+        const user_id = result_id.recordset[0].userId;
+
+        const post_id = req.body.postID;
+
+        let result = await db.query(`DELETE FROM spideyDb.dbo.Sightings WHERE sightingId=${post_id} AND userId=${user_id};`);
+                
+        res.status(200).send({rowsAffected : result.rowsAffected[0]});
+    }
+    catch (err) {
+        res.status(500).send({ msg: 'Database error : ' + err.message });
+    }
+
+});
+
 
 app.post('/upload', checkJwt, upload.single('image'), async (req, res) => {
     let { location, description, sightingTime } = req.body;
