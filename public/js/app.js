@@ -39,17 +39,16 @@ window.onload = async () => {
 };
 
 const sightingsbydate = async (jsonData) => {
-    // Delete the main feed card holder (if it exists)
+    // Delete the my sightings feed card holder (if it exists)
     try {
         let mainFeed = document.getElementById('main-sightings-feed');
         mainFeed.remove();
     } catch (error) {
-        console.log('Could not delete main feed.')
+        console.log('Could not delete my sightings feed.')
     }
-
-
-    let sightings = await getSightingsByDate(jsonData);
     
+    let sightings = await getSightingsByDate(jsonData);
+
     let cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");
     cardHolder.id = 'main-sightings-feed';
@@ -85,20 +84,33 @@ const sightingsbydate = async (jsonData) => {
             card.appendChild(cardImage);
 
             let cardContent = document.createElement('section');
-            cardContent.classList.add('card__content');
+            cardContent.classList.add('card-content');
+
+            let cardHeader = document.createElement('section');
+            cardHeader.classList.add('card-header');
+
+            let cardHeaderTime = document.createElement('p');
+            cardHeaderTime.innerText = date;
+            cardHeaderTime.classList.add('card-time');
+
+            let headerPlaceholder = document.createElement('aside');
+            headerPlaceholder.classList.add('card-delete-button');
+            headerPlaceholder.classList.add('delete-hidden');
 
             let cardTitle = document.createElement('p');
-            cardTitle.classList.add('card__title');
+            cardTitle.classList.add('card-title');
+
             cardTitle.innerText = 'Spidey sighted in ' + location + '!';
 
-            let cardTitleDate = document.createElement('p');
-            cardTitleDate.innerText = date;
-            cardTitle.appendChild(cardTitleDate);
-
-            cardContent.appendChild(cardTitle);
+            cardHeader.appendChild(cardHeaderTime);
+            cardHeader.appendChild(cardTitle);
+            cardHeader.appendChild(headerPlaceholder);
+            cardContent.appendChild(cardHeader);
 
             let cardDesc = document.createElement('p');
-            cardDesc.classList.add('card__description');
+
+            cardDesc.classList.add('card-description');
+
             cardDesc.innerText = 'Spider-man was sighted on ' + date + ' at ' + time;
 
             let cardDescInner = document.createElement('p');
@@ -107,12 +119,13 @@ const sightingsbydate = async (jsonData) => {
 
             cardContent.appendChild(cardDesc);
 
+
             card.appendChild(cardContent);
 
             cardHolder.appendChild(card);
         }
 
-        const body = document.body;
+        let body = document.body;
         body.appendChild(cardHolder);
     }
 };
