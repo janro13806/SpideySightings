@@ -93,12 +93,12 @@
 .button {
   color: var(--content);
   cursor: pointer;
-  border-radius: 0.6em;
+  border-radius: 0.6rem;
   padding: 0.6em 1.5em;
   background: var(--main-color);
   transition: 0.4s;
   margin: 0;
-  width: 20em;
+  width: 15rem;
 }
 
 .button:hover {
@@ -175,23 +175,28 @@
   user-select: none;
   }
 
-
-
-#start {
-  width: 10em;
-  border-radius: 0.6em;
+#start, #end {
+  width: 13.2rem;
+  height: 1.9rem;
+  border-radius: 0.6rem;
   border: 0.05em solid var(--text);
   background-color: var(--main-color);
   box-shadow: 0.1em 0.1em var(--background); 
-  font-size: 1em;
-  font-weight: 100;
   color: var(--background);
   outline: none;
   padding: 0.2em 0.2em 0.2em 1.2em;
   transition: all .2s ease;
 }
 
-#start:hover {
+#start:hover, #end:hover {
   transform: translate(-0.25em, -0.25em);
   box-shadow: 0.25em 0.25em var(--primary-alt);
+}
+
+#dateForm {
+  width: 21rem;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
