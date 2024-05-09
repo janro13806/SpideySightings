@@ -441,6 +441,7 @@ const displayProfile = async () => {
         document.getElementById("cardAvatar").src = JSON.parse(user).picture;
         document.getElementById("name").innerText = JSON.parse(user).name;
         document.getElementById("email").innerText = JSON.parse(user).email;
+        document.getElementById("profile-card").classList.toggle("hidden");
     }
     
 };
@@ -566,6 +567,9 @@ input.onchange = () => {
 };
 
 document.getElementById('toggleSearch').addEventListener('click', function() {
-    var form = document.getElementById('dateForm');
-    form.classList.toggle('show');
+    // var form = document.getElementById('dateForm');
+    // form.classList.toggle('show');
+
+    var profile = document.getElementById('profile-card');
+    profile.classList.toggle('search-adjust');
   });
