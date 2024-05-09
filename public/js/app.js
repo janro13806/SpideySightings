@@ -397,7 +397,7 @@ async function deleteClicked(postID)
 
 async function getSightings() {
     try {
-        const response = await fetch('http://spidersightings-app-env.eba-ubkvwsqu.eu-west-1.elasticbeanstalk.com/sightings');
+        const response = await fetch('https://da0t9he4bchaj.cloudfront.net/sightings');
         if (!response.ok) {
             console.log(response.text());
             throw new Error('Woopsie, API broke');
