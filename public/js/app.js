@@ -36,6 +36,9 @@ window.onload = async () => {
 
         window.history.replaceState({}, document.title, "/");
     }
+
+    document.getElementById("start").max = new Date().toISOString();
+    document.getElementById("end").max = new Date().toISOString();
 };
 
 const sightingsbydate = async (jsonData) => {
@@ -462,8 +465,7 @@ const displayProfile = async () => {
 
 const updateUI = async () => {
     const isAuthenticated = await auth0Client.isAuthenticated();
-    document.getElementById("btn-call-api").disabled = !isAuthenticated;
-
+    
     if (isAuthenticated) {
         document.getElementById("btn-nav-login").textContent = 'Logout';
         await checkProfile();

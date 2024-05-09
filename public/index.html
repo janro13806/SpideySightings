@@ -22,12 +22,12 @@
   <nav class="navbar">
     <h1 id="header">Welcme t Spidey Sightings</h1>
     <ul class="menu cf">
-      <li class="nav-home"><button type="button" id="btn-nav-home">Home</button></li>
+      <li class="nav-home"><button onclick="ViewMainFeedClicked()" type="button" id="btn-nav-home">Home</button></li>
       <li>
         <button>Services</button>
         <ul class="submenu">
           <li><button id="profile" type="button">Profile</button></li>
-          <li><button type="button">My Sightings</button></li>
+          <li><button onclick="ViewMySightingClicked()" type="button">My Sightings</button></li>
           <li><button type="button">Search</button></li>
         </ul>
       </li>
@@ -54,16 +54,16 @@
     <form id="dateForm">
 
       <p>
-        <label for="dateStart">Start Date:</label>
-        <input type="date" id="start" name="dateStart" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+        <label class="start-date" for="dateStart">Start Date:</label>
+        <input type="datetime-local" id="start" name="dateStart">
       </p>
 
       <p>
-        <label for="dateEnd">End Date:</label>
-        <input type="date" id="end" name="dateEnd" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+        <label class="end-date" for="dateEnd">End Date:</label>
+        <input type="datetime-local" id="end" name="dateEnd" >
       </p>
 
-      <p>
+      <p class="display-posts">
         <label for="userSightingsOnly">Display only your posts:</label>
 
         <span class="checkbox-con">
@@ -78,18 +78,17 @@
 
   <main class="hidden" id="gated-content">
 
-    <button id="btn-call-api" disabled="true" type="button" onclick="callApi()">Call Api</button>
-    <pre id="api-call-result"></pre>
+
 
     <form id="SightingForm" action="/upload" method="POST" enctype="multipart/form-data">
       <p class="formTitle">Create a new Sighting</p>
       <p class="subTitle">Where did you see Spiderman?</p>
       <section id="InputContainer">
-        <label class="inputLabel" for="location">Sighting Location</label>
+        <label class="inputLabel" for="location">Sighting Location:</label>
         <input class="input" id="location" name="location" placeholder="location" type="text" required />
-        <label class="inputLabel" for="description">Sighting Description</label>
+        <label class="inputLabel" for="description">Sighting Description:</label>
         <input class="input" id="description" name="description" placeholder="description" type="text" required />
-        <label class="inputLabel" for="sightingTime">Sighting Time</label>
+        <label class="inputLabel" for="sightingTime">Sighting Time:</label>
         <input class="input" id="sightingTime" name="sightingTime" placeholder="sighting Time" type="datetime-local" required />
       
         <label class="custom-file-upload" for="sightImage">
@@ -111,9 +110,6 @@
 
       </section>
     </form>
-
-    <button onclick="ViewMySightingClicked()">View my sightings - userId1 hardcoded</button>
-    <button onclick="ViewMainFeedClicked()">View main feed</button>
     
   </main>
 
