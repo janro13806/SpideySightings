@@ -125,7 +125,7 @@ const sightingsbyid = async () => {
     } catch (error) {
         console.log('Could not delete main feed.')
     }
-    const sightings = await getSightings();
+    const sightings = await getSightingsById();
 
     const cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");

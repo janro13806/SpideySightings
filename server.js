@@ -133,7 +133,7 @@ app.post("/sightingsbyid", async (req, res) => {
         //get userID
         const result_id = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
         const user_id = result_id.recordset[0].userId;
-
+        
         //get sightings made by userID
         const result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE userId=${user_id};`);
         res.status(200).send(result.recordset);
