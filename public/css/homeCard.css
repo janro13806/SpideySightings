@@ -20,8 +20,8 @@
   box-shadow: 0.4em 0.4em;
   background: var(--background);
 
-  max-width: 1000px;
-  max-height: calc(1000px * 9 / 16);
+  max-width: 60em;
+  max-height: calc(60em * 9 / 16);
   width: 90vw;
   height: calc(90vw * 9 /16);
 
@@ -44,7 +44,7 @@
 }
 
 .card-content {
-  position: absolute;
+  position: fixed;
   bottom: calc(-100% + 10vmin);
   width: 100%;
   height: 100%;
@@ -79,7 +79,7 @@
   font-size: calc(0.5em + 3vmin);
   /* font-weight: 700; */
   line-height: 5vmin;
-  padding-bottom: 5px;
+  padding-bottom: 0.313rem;
 }
 
 .card-heading {
@@ -101,7 +101,7 @@
   border-radius: 0.7em;
   border: 0.125em solid var(--text);
   background-color: var(--primary);
-  box-shadow: 4px 4px var(--font-color);
+  box-shadow: 0.125rem 0.125rem var(--font-color);
   color: var(--content);
   cursor: pointer;
   white-space: nowrap;
@@ -112,7 +112,7 @@
 
 .card-delete-button:hover {
   background-color: var(--secondary-alt);
-  box-shadow: 4px 4px var(--font-color);
+  box-shadow: 0.125rem 0.125rem var(--font-color);
   transform: scale(1.1);
 }
 
