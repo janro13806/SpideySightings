@@ -435,7 +435,7 @@ document.getElementById("dateForm").addEventListener("submit", async function(ev
 });
 
 const displayProfile = async () => {
-    const user = await auth0Client.getUser();
+    const user = JSON.stringify(await auth0Client.getUser());
     if (user.length > 0) {
         document.getElementById("gated-content").classList.toggle("hidden");
         document.getElementById("cardAvatar").src = JSON.parse(user).picture;
@@ -452,6 +452,8 @@ const updateUI = async () => {
         document.getElementById("btn-nav-login").textContent = 'Logout';
         await checkProfile();
         document.getElementById("gated-content").classList.toggle("hidden");
+
+        await displayProfile();
 
         document.getElementById("btn-nav-login").removeEventListener("click", login);
         document.getElementById("btn-nav-login").addEventListener("click", logout);
