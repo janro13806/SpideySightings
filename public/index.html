@@ -79,16 +79,16 @@
   <main class="hidden" id="gated-content">
 
 
-    
+
     <form id="SightingForm" action="/upload" method="POST" enctype="multipart/form-data">
       <p class="formTitle">Create a new Sighting</p>
-      <!-- <p class="subTitle">Where did you see Spiderman?</p> -->
+      <p class="subTitle">Where did you see Spiderman?</p>
       <section id="InputContainer">
-        <label class="inputLabel" for="location">Sighting Location</label>
+        <label class="inputLabel" for="location">Sighting Location:</label>
         <input class="input" id="location" name="location" placeholder="location" type="text" required />
-        <label class="inputLabel" for="description">Sighting Description</label>
+        <label class="inputLabel" for="description">Sighting Description:</label>
         <input class="input" id="description" name="description" placeholder="description" type="text" required />
-        <label class="inputLabel" for="sightingTime">Sighting Time</label>
+        <label class="inputLabel" for="sightingTime">Sighting Time:</label>
         <input class="input" id="sightingTime" name="sightingTime" placeholder="sighting Time" type="datetime-local" required />
       
         <label class="custom-file-upload" for="sightImage">
