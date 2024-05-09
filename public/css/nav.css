@@ -43,7 +43,7 @@ button {
     color: var(--content);
     text-transform: uppercase;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 0.875rem;
     background: none;
     border: none;
     cursor: pointer;
@@ -72,10 +72,10 @@ button {
 
 /* Dropdown */
 .submenu {
-    position: absolute;
-    width: 200px;
+    position: fixed;
+    width: 12.5rem;
     left: 50%;
-    margin-left: -100px;
+    margin-left: -6.25rem;
     transform: skewX(-25deg);
     transform-origin: left top;
 }
@@ -98,11 +98,11 @@ button {
 
 .submenu>li::after {
     content: '';
-    position: absolute;
+    position: fixed;
     top: -125%;
     height: 100%;
     width: 100%;
-    box-shadow: 0 0 50px rgba(0, 0, 0, .9);
+    box-shadow: 0 0 3.125rem rgba(0, 0, 0, .9);
 }
 
 .submenu>li:nth-child(odd) {
@@ -146,16 +146,16 @@ button {
 }
 
 .menu>li:hover .submenu li:nth-child(even) {
-    transform: skewX(25deg) translateX(15px);
+    transform: skewX(25deg) translateX(0.938rem);
 }
 
 .menu>li:hover .submenu li:nth-child(odd) {
-    transform: skewX(-25deg) translateX(-15px);
+    transform: skewX(-25deg) translateX(-0.938rem);
 }
 
 /* mobile */
 
-@media screen and (max-width: 1030px) {
+@media screen and (max-width: 64.375rem) {
 
     .menu,
     .submenu {

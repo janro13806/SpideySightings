@@ -465,8 +465,7 @@ const displayProfile = async () => {
 
 const updateUI = async () => {
     const isAuthenticated = await auth0Client.isAuthenticated();
-    document.getElementById("btn-call-api").disabled = !isAuthenticated;
-
+    
     if (isAuthenticated) {
         document.getElementById("btn-nav-login").textContent = 'Logout';
         await checkProfile();
