@@ -24,7 +24,7 @@
   --test: #AAA;
 
   --card-width: 100%;
-  --card-height: 20rem;
+  --card-height: 17em;
 
   --loader-width: 5rem;
   --loader-height: 5rem;
@@ -56,7 +56,7 @@ figure {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .blur {
