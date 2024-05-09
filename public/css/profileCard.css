@@ -98,6 +98,7 @@
   background: var(--secondary-alt);
   transition: 0.3s;
   margin: 0;
+  width: 20em;
 }
 
 .button:hover {
@@ -143,4 +144,18 @@
 
 .card:hover .image {
   transform: scale(2) translate(0%, -40%);
+}
+
+
+#dateForm {
+  display: none;
+  transition: all 0.3s ease-in-out;
+}
+
+#dateForm.show {
+  display: block;
+}
+
+#dateform #start{
+  display: block; 
 }

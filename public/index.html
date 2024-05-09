@@ -39,6 +39,7 @@
   <div id="loader"></div>
 
   <article class="card hidden" id="profile-card">
+
     <figure class="image">
       <img id="cardAvatar" src="" alt="">
     </figure>
@@ -47,6 +48,22 @@
       <p id="email"></p>
     </section>
     <button href="#" id="postSightingBtn" class="button">Post Sighting</button>
+
+    <button class="button" id="toggleSearch">Search</button>
+
+    <form id="dateForm">
+      <label for="dateStart">Start Date:</label>
+      <input type="date" id="start" name="dateStart" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+
+      <label for="dateEnd">End Date:</label>
+      <input type="date" id="end" name="dateEnd" value="2024-05-08" min="2018-01-01" max="2050-1-1">
+
+      <label for="userSightingsOnly">Display only your posts:</label>
+      <input type="checkbox" id="userPostsOnly" name="userSightingsOnly">
+
+      <input type="submit" class="button" value="Search">
+    </form>
+
   </article>
 
   <main class="hidden" id="gated-content">
@@ -87,20 +104,6 @@
 
     <button onclick="ViewMySightingClicked()">View my sightings - userId1 hardcoded</button>
     <button onclick="ViewMainFeedClicked()">View main feed</button>
-
-    <form id="dateForm">
-      <label for="dateStart">Start Date:</label>
-      <input type="date" id="start" name="dateStart" value="2024-05-08" min="2018-01-01" max="2050-1-1">
-      
-      <label for="dateEnd">End Date:</label>
-      <input type="date" id="end" name="dateEnd" value="2024-05-08" min="2018-01-01" max="2050-1-1">
-
-      <label for="userSightingsOnly">Display only your posts:</label>
-      <input type="checkbox" id="userPostsOnly" name="userSightingsOnly">
-      
-      <input type="submit" value="Submit">
-    </form>
-
     
   </main>
 

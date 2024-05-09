@@ -435,13 +435,15 @@ document.getElementById("dateForm").addEventListener("submit", async function(ev
 });
 
 const displayProfile = async () => {
-    const user = await auth0Client.getUser();
+    const user = JSON.stringify(await auth0Client.getUser());
+
     if (user.length > 0) {
         document.getElementById("gated-content").classList.toggle("hidden");
         document.getElementById("cardAvatar").src = JSON.parse(user).picture;
         document.getElementById("name").innerText = JSON.parse(user).name;
         document.getElementById("email").innerText = JSON.parse(user).email;
     }
+    
 };
 
 const updateUI = async () => {
@@ -452,7 +454,7 @@ const updateUI = async () => {
         document.getElementById("btn-nav-login").textContent = 'Logout';
         await checkProfile();
         document.getElementById("gated-content").classList.toggle("hidden");
-
+        await displayProfile();
         document.getElementById("btn-nav-login").removeEventListener("click", login);
         document.getElementById("btn-nav-login").addEventListener("click", logout);
     } else {
@@ -564,3 +566,8 @@ input.onchange = () => {
         fileNameDisplay.textContent = "No file selected";
     }
 };
+
+document.getElementById('toggleSearch').addEventListener('click', function() {
+    var form = document.getElementById('dateForm');
+    form.classList.toggle('show');
+  });
