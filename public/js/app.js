@@ -497,6 +497,10 @@ const updateUI = async () => {
 
         document.getElementById("btn-nav-login").removeEventListener("click", login);
         document.getElementById("btn-nav-login").addEventListener("click", logout);
+        const SightForm = document.getElementById("gated-content");
+        SightForm.classList.toggle('hidden');
+        const temp = document.getElementById("SightingForm");
+        temp.classList.toggle('hidden');
     } else {
         document.getElementById("gated-content").classList.toggle("hidden");
 
