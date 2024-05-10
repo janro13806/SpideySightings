@@ -244,8 +244,24 @@ const sightingsbyid = async () => {
     }
 };
 
-document.getElementById("profile").addEventListener("click", () => {
-    document.getElementById('gated-content').classList.toggle('hidden');
+document.getElementById("profile").addEventListener("click", async () => {
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    if (!isAuthenticated) {
+        await login();
+    }
+    else {
+        document.getElementById('gated-content').classList.toggle('hidden');
+    }
+});
+
+document.getElementById("search").addEventListener("click", async () => {
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    if (!isAuthenticated) {
+        await login();
+    }
+    else {
+        document.getElementById('gated-content').classList.toggle('hidden');
+    }
 });
 
 const sightings = async () => {
@@ -352,7 +368,13 @@ const sightings = async () => {
 
 async function ViewMySightingClicked()
 {
-    await sightingsbyid();
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    if (!isAuthenticated) {
+        await login();
+    }
+    else {
+        await sightingsbyid();
+    }
 }
 
 async function ViewMainFeedClicked()
