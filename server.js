@@ -76,7 +76,7 @@ const checkProfile = async (token, res) => {
         if (result.recordset.length === 0) {
             const InsertResult = await db.query(`INSERT INTO spideyDb.dbo.Users (email) VALUES ('${user.email}');`);
 
-            res.status(201).json({ msg: 'Profile created' });
+            res.status(201).json({ msg: 'Profile created', result: InsertResult});
         }
         else {
             res.status(200).json({ msg: 'Profile already exists' });
@@ -95,13 +95,6 @@ app.post("/profile", checkJwt, async (req, res) => {
     await checkProfile(token, res);
 });
 
-app.get("/api/external", checkJwt, async (req, res) => {
-    res.status(200).json({
-        msg: "Your access token was successfully validated!"
-    });
-});
-
-
 app.get("/auth_config.json", (_, res) => {
     res.sendFile(join(__dirname, "auth_config.json"));
 });
@@ -117,7 +110,7 @@ app.get("/sightings", async (_, res) => {
     }
 });
 
-app.post("/sightingsbyid", async (req, res) => {
+app.post("/sightingsbyid", checkJwt, async (req, res) => {
 
     const authHeader = req.headers.authorization;
     const token = authHeader.split(' ')[1];
@@ -131,11 +124,11 @@ app.post("/sightingsbyid", async (req, res) => {
     
     try {
         //get userID
-        const result_id = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
-        const user_id = result_id.recordset[0].userId;
+        const resultID = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
+        const userID = resultID.recordset[0].userId;
         
         //get sightings made by userID
-        const result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE userId=${user_id} ORDER BY sightingId DESC;`);
+        const result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE userId=${userID} ORDER BY sightingId DESC;`);
         res.status(200).send(result.recordset);
     }
     catch (err) {
@@ -144,7 +137,7 @@ app.post("/sightingsbyid", async (req, res) => {
 
 });
 
-app.post("/sightingsbydate", async (req, res) => {
+app.post("/sightingsbydate", checkJwt, async (req, res) => {
 
     const dateStart = new Date(req.body.dateStart);
     const dateEnd = new Date(req.body.dateEnd);
@@ -162,13 +155,13 @@ app.post("/sightingsbydate", async (req, res) => {
     
     try {
         //get userID
-        const result_id = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
-        const user_id = result_id.recordset[0].userId;
+        const resultID = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
+        const userID = resultID.recordset[0].userId;
 
-        let result = null;
+        let result = undefined;
 
         if(userSightingsOnly === "on"){
-            result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE (timestamp BETWEEN '${dateStart.toISOString()}' AND '${dateEnd.toISOString()}') AND userId=${user_id} ORDER BY sightingId DESC;`);
+            result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE (timestamp BETWEEN '${dateStart.toISOString()}' AND '${dateEnd.toISOString()}') AND userId=${userID} ORDER BY sightingId DESC;`);
         }
         else{
             result = await db.query(`SELECT * FROM spideyDb.dbo.Sightings WHERE timestamp BETWEEN '${dateStart.toISOString()}' AND '${dateEnd.toISOString()}' ORDER BY sightingId DESC;`);
@@ -182,7 +175,7 @@ app.post("/sightingsbydate", async (req, res) => {
 
 });
 
-app.post("/deletepostbyid", async (req, res) => {
+app.post("/deletepostbyid", checkJwt, async (req, res) => {
 
     const authHeader = req.headers.authorization;
     const token = authHeader.split(' ')[1];
@@ -196,14 +189,14 @@ app.post("/deletepostbyid", async (req, res) => {
     
     try {
         //get userID
-        const result_id = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
-        const user_id = result_id.recordset[0].userId;
+        const resultID = await db.query(`SELECT * FROM spideyDb.dbo.Users WHERE email = '${user.email}';`);
+        const userID = resultID.recordset[0].userId;
 
-        const post_id = req.body.postID;
+        const postID = req.body.postID;
 
-        let result = await db.query(`DELETE FROM spideyDb.dbo.Sightings WHERE sightingId=${post_id} AND userId=${user_id};`);
+        const result = await db.query(`DELETE FROM spideyDb.dbo.Sightings WHERE sightingId=${postID} AND userId=${userID};`);
 
-        res.status(200).send({rowsAffected : result.rowsAffected[0]});
+        res.status(200).send({rowsAffected : result.rowsAffected[0], });
     }
     catch (err) {
         res.status(500).send({ msg: 'Database error : ' + err.message });
@@ -225,10 +218,11 @@ app.post('/upload', checkJwt, upload.single('image'), async (req, res) => {
     try {
         const UploadResult = await db.query(`INSERT INTO spideyDb.dbo.Sightings (userId, location, image, description, timestamp) VALUES (${user.userId},'${location}','${imageUrl}','${description}','${sightingTime}');`);
         
-        res.status(201).json({ msg: 'Sighting uploaded successfully' });
+        res.status(201).send('Sighting uploaded successfully');
 
     } catch (err) {
-        res.status(500).json({ msg: 'Database Error : ' + err.message });
+        res.status(500).send('Database Error : ' + err.message);
+        console.log(err.message);
     }
 });
 
