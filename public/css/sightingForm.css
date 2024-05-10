@@ -115,7 +115,7 @@
     border: 0.05em solid var(--text);
     background-color: var(--primary-alt);
     box-shadow: 0.1em 0.1em var(--background); 
-    font-size: 3em;
+    font-size:  clamp(1rem, -0.875rem + 8.333vw, 3.5rem);
     font-weight: 100;
     font-family: 'Spiderman';
     color: var(--background);

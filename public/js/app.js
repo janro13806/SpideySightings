@@ -1,5 +1,4 @@
-let user_id = 1
-let auth0Client = null;
+let auth0Client = undefined;
 
 const fetchAuthConfig = () => fetch("/auth_config.json");
 
@@ -56,7 +55,7 @@ const sightingsbydate = async (jsonData) => {
     cardHolder.classList.add("cardHolder");
     cardHolder.id = 'main-sightings-feed';
 
-    if (sightings != null) {
+    if (sightings != undefined) {
         for (i = 0; i < sightings.length; i++) {
 
             //information show for each post
@@ -154,7 +153,7 @@ const sightingsbyid = async () => {
     cardHolder.classList.add("cardHolder");
     cardHolder.id = 'main-sightings-feed';
 
-    if (sightings != null) {
+    if (sightings != undefined) {
         for (i = 0; i < sightings.length; i++) {
 
             //id of the post
@@ -239,8 +238,24 @@ const sightingsbyid = async () => {
     }
 };
 
-document.getElementById("profile").addEventListener("click", () => {
-    document.getElementById('gated-content').classList.toggle('hidden');
+document.getElementById("profile").addEventListener("click", async () => {
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    if (!isAuthenticated) {
+        await login();
+    }
+    else {
+        document.getElementById('gated-content').classList.toggle('hidden');
+    }
+});
+
+document.getElementById("search").addEventListener("click", async () => {
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    if (!isAuthenticated) {
+        await login();
+    }
+    else {
+        document.getElementById('gated-content').classList.toggle('hidden');
+    }
 });
 
 const sightings = async () => {
@@ -266,7 +281,7 @@ const sightings = async () => {
     const cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");
     cardHolder.id = 'main-sightings-feed';
-    if (sightings != null) {
+    if (sightings != undefined) {
         for (i = 0; i < sightings.length; i++) {
             //information show for each post
             const location = sightings[i]['location'];
@@ -344,7 +359,13 @@ const sightings = async () => {
 
 async function ViewMySightingClicked()
 {
-    await sightingsbyid();
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    if (!isAuthenticated) {
+        await login();
+    }
+    else {
+        await sightingsbyid();
+    }
 }
 
 async function ViewMainFeedClicked()
