@@ -1,5 +1,4 @@
-let user_id = 1
-let auth0Client = null;
+let auth0Client = undefined;
 
 const fetchAuthConfig = () => fetch("/auth_config.json");
 
@@ -56,7 +55,7 @@ const sightingsbydate = async (jsonData) => {
     cardHolder.classList.add("cardHolder");
     cardHolder.id = 'main-sightings-feed';
 
-    if (sightings != null) {
+    if (sightings != undefined) {
         for (i = 0; i < sightings.length; i++) {
 
             //id of the post
@@ -145,7 +144,7 @@ const sightingsbyid = async () => {
     }
     try {
         let emptyFeed = document.getElementById('empty-message');
-        mainFeed.remove();
+        emptyFeed.remove();
     } catch (error) {
         //console.log('Could not delete my sightings feed.')
     }
@@ -156,7 +155,7 @@ const sightingsbyid = async () => {
     cardHolder.classList.add("cardHolder");
     cardHolder.id = 'main-sightings-feed';
 
-    if (sightings != null) {
+    if (sightings != undefined) {
         for (i = 0; i < sightings.length; i++) {
 
             //id of the post
@@ -274,7 +273,7 @@ const sightings = async () => {
     }
     try {
         let emptyFeed = document.getElementById('empty-message');
-        mainFeed.remove();
+        emptyFeed.remove();
     } catch (error) {
         //console.log('Could not delete my sightings feed.')
     }
@@ -283,7 +282,7 @@ const sightings = async () => {
     let cardHolder = document.createElement('section');
     cardHolder.classList.add("cardHolder");
     cardHolder.id = 'main-sightings-feed';
-    if (sightings != null) {
+    if (sightings != undefined) {
         for (i = 0; i < sightings.length; i++) {
 
             //id of the post
@@ -412,7 +411,7 @@ async function deleteClicked(postID)
     }
     catch(err){
         console.error(err);
-        return null;
+        return undefined;
     }
 
 }
@@ -427,7 +426,7 @@ async function getSightings() {
         return await response.json();
     } catch (error) {
         console.error(error);
-        return null;
+        return undefined;
     }
 }
 
@@ -449,7 +448,7 @@ async function getSightingsById() {
         }
         catch(err){
             console.error(err);
-            return null;
+            return undefined;
         }
 }
 
@@ -473,7 +472,7 @@ async function getSightingsByDate(jsonData){
     }
     catch(err){
         console.error(err);
-        return null;
+        return undefined;
     }
 }
 
