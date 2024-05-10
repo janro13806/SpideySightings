@@ -555,6 +555,7 @@ document.getElementById("postSightingBtn").addEventListener("click", () => {
 
 document.getElementById('SightingForm').addEventListener('submit', async (event) => {
     document.getElementById("loader").classList.toggle("hidden");
+    document.getElementById("sighting-button").disabled = true;
 
     event.preventDefault();
 
@@ -571,8 +572,10 @@ document.getElementById('SightingForm').addEventListener('submit', async (event)
     .then(async () => {
         await sightingsbyid();
         document.getElementById("loader").classList.toggle("hidden");
+        document.getElementById("sighting-button").disabled = false;
     })
     .catch((err) => {
+        document.getElementById("sighting-button").disabled = false;
         throw new Error('Woopsie, API broke : ' + err.message);
     });
 });
