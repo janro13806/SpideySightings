@@ -244,7 +244,7 @@ document.getElementById("profile").addEventListener("click", async () => {
         await login();
     }
     else {
-        document.getElementById('gated-content').classList.toggle('hidden');
+        document.getElementById('SightingForm').classList.toggle('hidden');
     }
 });
 
@@ -254,7 +254,8 @@ document.getElementById("search").addEventListener("click", async () => {
         await login();
     }
     else {
-        document.getElementById('gated-content').classList.toggle('hidden');
+        var profile = document.getElementById('profile-card');
+        profile.classList.toggle('search-adjust');
     }
 });
 
@@ -478,7 +479,7 @@ document.getElementById("dateForm").addEventListener("submit", async function(ev
 const displayProfile = async () => {
     const user = JSON.stringify(await auth0Client.getUser());
     if (user.length > 0) {
-        document.getElementById("gated-content").classList.toggle("hidden");
+        document.getElementById("profile-card").classList.remove("hidden");
         document.getElementById("cardAvatar").src = JSON.parse(user).picture;
         document.getElementById("name").innerText = JSON.parse(user).name;
         document.getElementById("email").innerText = JSON.parse(user).email;
@@ -499,10 +500,10 @@ const updateUI = async () => {
 
         document.getElementById("btn-nav-login").removeEventListener("click", login);
         document.getElementById("btn-nav-login").addEventListener("click", logout);
-        const SightForm = document.getElementById("gated-content");
+        const SightForm = document.getElementById("profile-card");
         SightForm.classList.toggle('hidden');
     } else {
-        document.getElementById("gated-content").classList.toggle("hidden");
+        // document.getElementById("gated-content").classList.toggle("hidden");
 
         document.getElementById("btn-nav-login").removeEventListener("click", logout);
         document.getElementById("btn-nav-login").addEventListener("click", login);
