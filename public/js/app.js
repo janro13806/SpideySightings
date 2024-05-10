@@ -501,8 +501,6 @@ const updateUI = async () => {
         document.getElementById("btn-nav-login").addEventListener("click", logout);
         const SightForm = document.getElementById("gated-content");
         SightForm.classList.toggle('hidden');
-        const temp = document.getElementById("SightingForm");
-        temp.classList.toggle('hidden');
     } else {
         document.getElementById("gated-content").classList.toggle("hidden");
 
@@ -550,7 +548,7 @@ const logout = () => {
 
 
 document.getElementById("postSightingBtn").addEventListener("click", () => {
-    const SightForm = document.getElementById("gated-content");
+    const SightForm = document.getElementById("SightingForm");
     SightForm.classList.toggle('hidden');
 });
 
